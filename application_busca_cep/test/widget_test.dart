@@ -11,6 +11,7 @@ import 'package:application_busca_cep/MyApp.dart';
 
 import 'package:application_busca_cep/main.dart';
 import 'package:application_busca_cep/BuscarCep.dart';
+import 'package:application_busca_cep/HomePage_Login.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

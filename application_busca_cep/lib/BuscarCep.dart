@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:flutter/src/foundation/key.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class BuscarCep extends StatefulWidget {
   const BuscarCep({Key? key}) : super(key: key);
@@ -15,10 +16,30 @@ class BuscarCep extends StatefulWidget {
 class _BuscarCepState extends State<BuscarCep> {
   IconData IconPesquisar = Icons.search;
 
-  Future fetch() async {
-    var url = 'https://viacep.com.br/ws/01001000/json/';
-    var response = await http.get(url);
-    print(response.body);
+  TextEditingController cepController = TextEditingController();
+  String? resultado;
+
+  _consultarCep() async {
+    String cep = cepController.text;
+
+    String url = "https://viacep.com.br/ws/${cep}/json/";
+
+    http.Response response;
+
+    response = await http.get(url);
+
+    Map<String, dynamic> retorno = json.decode(response.body);
+
+    String logradouro = retorno["logradouro"];
+    String complemento = retorno["complemento"];
+    String bairro = retorno["bairro"];
+    String cidade = retorno["localidade"];
+    String uf = retorno["uf"];
+    String ddd = retorno["ddd"];
+
+    setState(() {
+      resultado = "$logradouro, $complemento\n $bairro,\n $cidade, $uf, $ddd";
+    });
   }
 
   // TextEditingController cepController = new TextEditingController();
@@ -33,6 +54,7 @@ class _BuscarCepState extends State<BuscarCep> {
         backgroundColor: Colors.deepOrange,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             padding: EdgeInsets.all(8),
@@ -49,23 +71,26 @@ class _BuscarCepState extends State<BuscarCep> {
                         Icons.maps_home_work,
                       ),
                     ),
+                    controller: cepController,
                   ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
-                  onPressed: () {},
+                  onPressed: () {
+                    _consultarCep();
+                  },
                   child: Icon(IconPesquisar),
                 ),
               ],
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
           Text(
-            "Resultado:",
-            style: TextStyle(
-              fontSize: 25,
-              height: 3,
-            ),
-          )
+            "${resultado}",
+            style: TextStyle(fontSize: 25, height: 1.5),
+          ),
         ],
       ),
     );
