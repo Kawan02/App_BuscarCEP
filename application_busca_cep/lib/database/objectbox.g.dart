@@ -24,13 +24,7 @@ final _entities = <ModelEntity>[
       name: 'dataBase',
       lastPropertyId: const IdUid(1, 1294407485292705823),
       flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 1294407485292705823),
-            name: 'id',
-            type: 6,
-            flags: 1)
-      ],
+      properties: <ModelProperty>[ModelProperty(id: const IdUid(1, 1294407485292705823), name: 'id', type: 6, flags: 1)],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
@@ -68,26 +62,34 @@ ModelDefinition getObjectBoxModel() {
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    DataBase: EntityDefinition<DataBase>(
+    Tarefa: EntityDefinition<Tarefa>(
         model: _entities[0],
-        toOneRelations: (DataBase object) => [],
-        toManyRelations: (DataBase object) => {},
-        getId: (DataBase object) => object.id,
-        setId: (DataBase object, int id) {
+        toOneRelations: (Tarefa object) => [],
+        toManyRelations: (Tarefa object) => {},
+        getId: (Tarefa object) => object.id,
+        setId: (Tarefa object, int id) {
           object.id = id;
         },
-        objectToFB: (DataBase object, fb.Builder fbb) {
+        objectToFB: (Tarefa object, fb.Builder fbb) {
           fbb.startTable(2);
           fbb.addInt64(0, object.id);
           fbb.finish(fbb.endTable());
+          fbb.startTable(4);
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = DataBase()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final object = Tarefa(
+            cepController: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+            bairro: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+            cidade: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+            complemento: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+            ddd: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+            logradouro: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+            uf: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+          )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         })
@@ -99,5 +101,5 @@ ModelDefinition getObjectBoxModel() {
 /// [dataBase] entity fields to define ObjectBox queries.
 class dataBase_ {
   /// see [dataBase.id]
-  static final id = QueryIntegerProperty<DataBase>(_entities[0].properties[0]);
+  static final id = QueryIntegerProperty<Tarefa>(_entities[0].properties[0]);
 }
