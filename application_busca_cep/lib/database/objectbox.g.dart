@@ -20,48 +20,48 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(3, 3430613792179496337),
+      id: const IdUid(1, 4303363070549794841),
       name: 'CepModel',
-      lastPropertyId: const IdUid(9, 5927834512577141041),
+      lastPropertyId: const IdUid(8, 4808060336707700220),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 3995164599839572361),
+            id: const IdUid(1, 627720648116257088),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 2668088302519279342),
+            id: const IdUid(2, 1530642162089849666),
             name: 'logradouro',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 3908942661476026094),
+            id: const IdUid(3, 6321005969723323113),
             name: 'complemento',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 1382056819101778323),
+            id: const IdUid(4, 174579268246680686),
             name: 'bairro',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 3135738289700960618),
+            id: const IdUid(5, 7209680028474269576),
             name: 'cidade',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 9200741289671301258),
+            id: const IdUid(6, 105149286326530171),
             name: 'uf',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(7, 5067813861404143259),
+            id: const IdUid(7, 7753727955140648133),
             name: 'ddd',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(8, 6282569229260401882),
+            id: const IdUid(8, 4808060336707700220),
             name: 'cepController',
             type: 9,
             flags: 0)
@@ -97,24 +97,13 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 3430613792179496337),
+      lastEntityId: const IdUid(1, 4303363070549794841),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [1094792042483680794, 8976841081473314080],
+      retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [
-        1294407485292705823,
-        7405822548553391796,
-        2423282762568005520,
-        7760768771206418455,
-        6205022504840497166,
-        8364715860137635279,
-        2690734691457859166,
-        5664150582152961754,
-        6952825711527246640,
-        5927834512577141041
-      ],
+      retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -137,7 +126,7 @@ ModelDefinition getObjectBoxModel() {
           final ufOffset = fbb.writeString(object.uf);
           final dddOffset = fbb.writeString(object.ddd);
           final cepControllerOffset = fbb.writeString(object.cepController);
-          fbb.startTable(10);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, logradouroOffset);
           fbb.addOffset(2, complementoOffset);

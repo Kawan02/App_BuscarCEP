@@ -4,48 +4,48 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "3:3430613792179496337",
-      "lastPropertyId": "9:5927834512577141041",
+      "id": "1:4303363070549794841",
+      "lastPropertyId": "8:4808060336707700220",
       "name": "CepModel",
       "properties": [
         {
-          "id": "1:3995164599839572361",
+          "id": "1:627720648116257088",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:2668088302519279342",
+          "id": "2:1530642162089849666",
           "name": "logradouro",
           "type": 9
         },
         {
-          "id": "3:3908942661476026094",
+          "id": "3:6321005969723323113",
           "name": "complemento",
           "type": 9
         },
         {
-          "id": "4:1382056819101778323",
+          "id": "4:174579268246680686",
           "name": "bairro",
           "type": 9
         },
         {
-          "id": "5:3135738289700960618",
+          "id": "5:7209680028474269576",
           "name": "cidade",
           "type": 9
         },
         {
-          "id": "6:9200741289671301258",
+          "id": "6:105149286326530171",
           "name": "uf",
           "type": 9
         },
         {
-          "id": "7:5067813861404143259",
+          "id": "7:7753727955140648133",
           "name": "ddd",
           "type": 9
         },
         {
-          "id": "8:6282569229260401882",
+          "id": "8:4808060336707700220",
           "name": "cepController",
           "type": 9
         }
@@ -53,29 +53,15 @@
       "relations": []
     }
   ],
-  "lastEntityId": "3:3430613792179496337",
+  "lastEntityId": "1:4303363070549794841",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [
-    1094792042483680794,
-    8976841081473314080
-  ],
+  "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    1294407485292705823,
-    7405822548553391796,
-    2423282762568005520,
-    7760768771206418455,
-    6205022504840497166,
-    8364715860137635279,
-    2690734691457859166,
-    5664150582152961754,
-    6952825711527246640,
-    5927834512577141041
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }
