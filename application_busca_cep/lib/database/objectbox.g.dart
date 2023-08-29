@@ -9,87 +9,174 @@
 
 import 'dart:typed_data';
 
-import 'package:application_busca_cep/model/cep_model.dart';
 import 'package:flat_buffers/flat_buffers.dart' as fb;
 import 'package:objectbox/internal.dart'; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart';
+import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import '../buscar_cep.dart';
+import '../model/cep_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 1094792042483680794),
-      name: 'dataBase',
-      lastPropertyId: const IdUid(1, 1294407485292705823),
+      id: const IdUid(3, 3430613792179496337),
+      name: 'CepModel',
+      lastPropertyId: const IdUid(9, 5927834512577141041),
       flags: 0,
-      properties: <ModelProperty>[ModelProperty(id: const IdUid(1, 1294407485292705823), name: 'id', type: 6, flags: 1)],
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 3995164599839572361),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2668088302519279342),
+            name: 'logradouro',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3908942661476026094),
+            name: 'complemento',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1382056819101778323),
+            name: 'bairro',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3135738289700960618),
+            name: 'cidade',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 9200741289671301258),
+            name: 'uf',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 5067813861404143259),
+            name: 'ddd',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 6282569229260401882),
+            name: 'cepController',
+            type: 9,
+            flags: 0)
+      ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
-/// Open an ObjectBox store with the model declared in this file.
-Store openStore(
+/// Shortcut for [Store.new] that passes [getObjectBoxModel] and for Flutter
+/// apps by default a [directory] using `defaultStoreDirectory()` from the
+/// ObjectBox Flutter library.
+///
+/// Note: for desktop apps it is recommended to specify a unique [directory].
+///
+/// See [Store.new] for an explanation of all parameters.
+Future<Store> openStore(
         {String? directory,
         int? maxDBSizeInKB,
         int? fileMode,
         int? maxReaders,
         bool queriesCaseSensitiveDefault = true,
-        String? macosApplicationGroup}) =>
+        String? macosApplicationGroup}) async =>
     Store(getObjectBoxModel(),
-        directory: directory,
+        directory: directory ?? (await defaultStoreDirectory()).path,
         maxDBSizeInKB: maxDBSizeInKB,
         fileMode: fileMode,
         maxReaders: maxReaders,
         queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
         macosApplicationGroup: macosApplicationGroup);
 
-/// ObjectBox model definition, pass it to [Store] - Store(getObjectBoxModel())
+/// Returns the ObjectBox model definition for this project for use with
+/// [Store.new].
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 1094792042483680794),
+      lastEntityId: const IdUid(3, 3430613792179496337),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [1094792042483680794, 8976841081473314080],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [
+        1294407485292705823,
+        7405822548553391796,
+        2423282762568005520,
+        7760768771206418455,
+        6205022504840497166,
+        8364715860137635279,
+        2690734691457859166,
+        5664150582152961754,
+        6952825711527246640,
+        5927834512577141041
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    Tarefa: EntityDefinition<Tarefa>(
+    CepModel: EntityDefinition<CepModel>(
         model: _entities[0],
-        toOneRelations: (Tarefa object) => [],
-        toManyRelations: (Tarefa object) => {},
-        getId: (Tarefa object) => object.id,
-        setId: (Tarefa object, int id) {
+        toOneRelations: (CepModel object) => [],
+        toManyRelations: (CepModel object) => {},
+        getId: (CepModel object) => object.id,
+        setId: (CepModel object, int id) {
           object.id = id;
         },
-        objectToFB: (Tarefa object, fb.Builder fbb) {
-          fbb.startTable(2);
+        objectToFB: (CepModel object, fb.Builder fbb) {
+          final logradouroOffset = fbb.writeString(object.logradouro);
+          final complementoOffset = fbb.writeString(object.complemento);
+          final bairroOffset = fbb.writeString(object.bairro);
+          final cidadeOffset = fbb.writeString(object.cidade);
+          final ufOffset = fbb.writeString(object.uf);
+          final dddOffset = fbb.writeString(object.ddd);
+          final cepControllerOffset = fbb.writeString(object.cepController);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
+          fbb.addOffset(1, logradouroOffset);
+          fbb.addOffset(2, complementoOffset);
+          fbb.addOffset(3, bairroOffset);
+          fbb.addOffset(4, cidadeOffset);
+          fbb.addOffset(5, ufOffset);
+          fbb.addOffset(6, dddOffset);
+          fbb.addOffset(7, cepControllerOffset);
           fbb.finish(fbb.endTable());
-          fbb.startTable(4);
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = Tarefa(
-            cepController: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-            bairro: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-            cidade: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-            complemento: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-            ddd: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-            logradouro: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-            uf: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
-          )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final logradouroParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final complementoParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final bairroParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final cidadeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final ufParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final dddParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final cepControllerParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final object = CepModel(
+              logradouro: logradouroParam,
+              complemento: complementoParam,
+              bairro: bairroParam,
+              cidade: cidadeParam,
+              uf: ufParam,
+              ddd: dddParam,
+              cepController: cepControllerParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         })
@@ -98,8 +185,34 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [dataBase] entity fields to define ObjectBox queries.
-class dataBase_ {
-  /// see [dataBase.id]
-  static final id = QueryIntegerProperty<Tarefa>(_entities[0].properties[0]);
+/// [CepModel] entity fields to define ObjectBox queries.
+class CepModel_ {
+  /// see [CepModel.id]
+  static final id = QueryIntegerProperty<CepModel>(_entities[0].properties[0]);
+
+  /// see [CepModel.logradouro]
+  static final logradouro =
+      QueryStringProperty<CepModel>(_entities[0].properties[1]);
+
+  /// see [CepModel.complemento]
+  static final complemento =
+      QueryStringProperty<CepModel>(_entities[0].properties[2]);
+
+  /// see [CepModel.bairro]
+  static final bairro =
+      QueryStringProperty<CepModel>(_entities[0].properties[3]);
+
+  /// see [CepModel.cidade]
+  static final cidade =
+      QueryStringProperty<CepModel>(_entities[0].properties[4]);
+
+  /// see [CepModel.uf]
+  static final uf = QueryStringProperty<CepModel>(_entities[0].properties[5]);
+
+  /// see [CepModel.ddd]
+  static final ddd = QueryStringProperty<CepModel>(_entities[0].properties[6]);
+
+  /// see [CepModel.cepController]
+  static final cepController =
+      QueryStringProperty<CepModel>(_entities[0].properties[7]);
 }

@@ -1,7 +1,7 @@
-import 'package:application_busca_cep/database/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Tarefa {
+class CepModel {
   @Id()
   int id = 0;
   String logradouro;
@@ -12,7 +12,7 @@ class Tarefa {
   String ddd;
   String cepController;
 
-  Tarefa({
+  CepModel({
     required this.logradouro,
     required this.complemento,
     required this.bairro,
@@ -22,25 +22,3 @@ class Tarefa {
     required this.cepController,
   });
 }
-
-// @Entity()
-// class DataBase {
-//   int id = 0;
-//   String? logradouro;
-//   String? complemento;
-//   String? bairro;
-//   String? cidade;
-//   String? uf;
-//   String? ddd;
-//   String? cepController;
-
-//   DataBase({
-//     this.logradouro,
-//     this.complemento,
-//     this.bairro,
-//     this.cidade,
-//     this.uf,
-//     this.ddd,
-//     this.cepController,
-//   });
-// }
