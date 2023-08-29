@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
 
 class ImagemSelected extends StatelessWidget {
-  String img_selected;
-  ImagemSelected({Key? key, required this.img_selected}) : super(key: key);
+  String imgselected;
+  ImagemSelected({Key? key, required this.imgselected}) : super(key: key);
 
   // String get img_selected => img_selected;
   @override
@@ -15,7 +14,7 @@ class ImagemSelected extends StatelessWidget {
         body: Center(
           child: SizedBox(
             height: 400,
-            child: Image.asset(img_selected),
+            child: Image.asset(imgselected),
           ),
         ),
       ),

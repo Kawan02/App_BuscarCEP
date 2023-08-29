@@ -1,13 +1,27 @@
-import 'package:application_busca_cep/Photo_Screen/home_screen.dart';
+import 'package:application_busca_cep/buscar_cep.dart';
 import 'package:flutter/material.dart';
-import 'HomePage_Login.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale('pt', 'BR'),
+      supportedLocales: [Locale('pt', 'BR')],
+      home: BuscarCep(),
     );
   }
 }
