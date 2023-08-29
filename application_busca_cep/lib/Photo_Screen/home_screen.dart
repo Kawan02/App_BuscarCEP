@@ -1,7 +1,4 @@
 import 'package:application_busca_cep/Photo_Screen/image_selected.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -25,11 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: InkWell(
           onTap: () {
             Navigator.push(
-                context,
-                PageTransition(
-                    child: ImagemSelected(img_selected: img), 
-                    type: PageTransitionType.fade
-                  ));
+              context,
+              PageTransition(
+                child: ImagemSelected(imgselected: img),
+                type: PageTransitionType.fade,
+              ),
+            );
           },
           child: SizedBox(height: 200, child: Image.asset(img, fit: BoxFit.cover)),
         ),
