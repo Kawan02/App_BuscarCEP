@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:application_busca_cep/auth/login_sign.dart';
 import 'package:application_busca_cep/buscar_cep.dart';
@@ -50,8 +49,7 @@ class Login extends StatelessWidget {
                     SizedBox(
                       height: 30,
                       child: DefaultTextStyle(
-                        style:
-                            const TextStyle(fontSize: 25, color: Colors.white),
+                        style: const TextStyle(fontSize: 25, color: Colors.white),
                         child: AnimatedTextKit(
                           pause: Duration.zero,
                           repeatForever: true,
@@ -66,8 +64,7 @@ class Login extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(
@@ -141,8 +138,7 @@ class Login extends StatelessWidget {
                               width: 2.0,
                               color: Colors.deepOrange,
                             ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18))),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
                         onPressed: () async {
                           await Navigator.of(context).push(
                             MaterialPageRoute(

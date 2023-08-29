@@ -29,30 +29,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  # http: ^0.12.0+1
   path: ^1.7.0
-  path_provider: ^1.0.0
   get: ^4.6.5
   getwidget: ^3.0.1
   font_awesome_flutter: ^10.3.0
   page_transition: ^2.0.9
   animated_text_kit: ^4.2.2
   mask_text_input_formatter: ^2.5.0
+  #OBJECT BOX
   objectbox: ^2.1.0
-  # objectbox_flutter_libs: ^2.1.0
-  # connectivity_plus: ^0.8.1
-  # internet_connection_checker: ^1.0.0+1
+  objectbox_flutter_libs: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  #OBJECT_BOX
   build_runner: ^2.0.0
-  objectbox_generator:
+  objectbox_generator: any
+  # build_runner: ^2.0.0
+  # objectbox_generator:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -77,10 +81,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/imgs/capa_fundo.jpg
-    - assets/imgs/img.jpg
-    - assets/imgs/background.jpg
-    - assets/imgs/correios.png
     - assets/imgs/
     
   #   - images/a_dot_ham.jpeg
