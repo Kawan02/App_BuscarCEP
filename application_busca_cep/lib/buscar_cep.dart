@@ -17,6 +17,8 @@ class BuscarCep extends StatefulWidget {
 class _BuscarCepState extends State<BuscarCep> {
   ListaCepController cepController = ListaCepController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKeyFilter = GlobalKey();
+  bool listFilter = false;
   String _logradouro = "";
   String _complemento = "";
   String _bairro = "";
@@ -44,12 +46,12 @@ class _BuscarCepState extends State<BuscarCep> {
         uf: retorno["uf"],
       );
       setState(() {
-        _logradouro = cepBaseModel.logradouro;
-        _complemento = cepBaseModel.complemento;
-        _bairro = cepBaseModel.bairro;
-        _cidade = cepBaseModel.cidade;
-        _uf = cepBaseModel.uf;
-        _ddd = cepBaseModel.ddd;
+        _logradouro = cepBaseModel.logradouro!;
+        _complemento = cepBaseModel.complemento!;
+        _bairro = cepBaseModel.bairro!;
+        _cidade = cepBaseModel.cidade!;
+        _uf = cepBaseModel.uf!;
+        _ddd = cepBaseModel.ddd!;
         showAlertDialog(context);
       });
     } else {
@@ -124,16 +126,102 @@ class _BuscarCepState extends State<BuscarCep> {
     );
   }
 
+  Future<void> _filterCep(TextEditingController filter) async {
+    return await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Filtro"),
+            GestureDetector(
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(Icons.close, size: 20),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+        content: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Form(
+            key: _formKeyFilter,
+            child: TextFormField(
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return "Informe o CEP";
+                }
+                return null;
+              },
+              controller: cepController.cepFilter,
+              inputFormatters: [cepFormatter],
+              keyboardType: TextInputType.number,
+              autofocus: true,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.maps_home_work),
+                labelText: "Insira um CEP",
+                hintText: "Digite um CEP aqui...",
+                isDense: true,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
+              ),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.only(bottom: 15.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
+              onPressed: () async {
+                if (!_formKeyFilter.currentState!.validate()) return;
+
+                setState(() {
+                  listFilter = true;
+                  cepController.listFilter();
+                  Navigator.of(ctx).pop();
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.check),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      'Pesquisar CEP',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
-    cepController.encontrarTarefa();
+    listFilter == false ? cepController.encontrarTarefa() : cepController.listFilter();
     super.initState();
   }
 
   @override
   void dispose() {
     cepController.encontrarTarefa();
+    cepController.listFilter();
     cepController.controllerTextField.dispose();
+    cepController.cepFilter.dispose();
     super.dispose();
   }
 
@@ -144,6 +232,21 @@ class _BuscarCepState extends State<BuscarCep> {
         title: const Text("Buscar CEP"),
         centerTitle: true,
         backgroundColor: Colors.deepOrange[400],
+        actions: [
+          IconButton(
+            icon: Icon(listFilter == false ? Icons.filter_alt : Icons.filter_alt_off),
+            onPressed: () async {
+              if (listFilter != false) {
+                setState(() {
+                  listFilter = false;
+                });
+                return;
+              }
+              cepController.cepFilter.clear();
+              await _filterCep(cepController.cepFilter);
+            },
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -167,7 +270,6 @@ class _BuscarCepState extends State<BuscarCep> {
                         controller: cepController.controllerTextField,
                         inputFormatters: [cepFormatter],
                         keyboardType: TextInputType.number,
-                        autofocus: true,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.maps_home_work),
                           labelText: "Insira um CEP",
@@ -196,49 +298,94 @@ class _BuscarCepState extends State<BuscarCep> {
             ),
           ),
           Expanded(
-            child: cepController.encontrarTarefa().isEmpty
+            child: cepController.encontrarTarefa().isEmpty && listFilter == false
                 ? const Center(
                     child: Text("A lista de CEP está vazia (:"),
                   )
-                : ListView.builder(
-                    padding: const EdgeInsets.only(top: 10),
-                    shrinkWrap: true,
-                    itemCount: cepController.encontrarTarefa().length,
-                    itemBuilder: (context, index) {
-                      return Dismissible(
-                        background: Container(
-                          color: Colors.red,
-                          child: const Align(
-                            alignment: Alignment(-0.9, 0),
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                            ),
+                : cepController.listFilter().isEmpty && listFilter == true
+                    ? const Center(
+                        child: Text("CEP não econtrado, verifique se digitou corretamente (:"),
+                      )
+                    : listFilter == false
+                        ? ListView.builder(
+                            padding: const EdgeInsets.only(top: 10),
+                            shrinkWrap: true,
+                            itemCount: cepController.encontrarTarefa().length,
+                            itemBuilder: (context, index) {
+                              final cep = cepController.encontrarTarefa()[index];
+
+                              return Dismissible(
+                                background: Container(
+                                  color: Colors.red,
+                                  child: const Align(
+                                    alignment: Alignment(-0.9, 0),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                direction: DismissDirection.startToEnd,
+                                key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+                                child: ListTile(
+                                  title: Text(
+                                    cep.cepController.isEmpty ? "CEP vazio ou não encontrado" : cep.cepController,
+                                  ),
+                                  leading: CircleAvatar(
+                                    child: Image.asset("assets/imgs/correios.png"),
+                                  ),
+                                  subtitle: Text(
+                                    "${cep.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cep.logradouro}, ${cep.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cep.bairro}, ${cep.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cep.cidade}, ${cep.uf!.isEmpty ? "uf vazio ou não encontrado" : cep.uf}",
+                                  ),
+                                ),
+                                onDismissed: (direction) async {
+                                  var delete = await cepController.deletarTarefa(cep);
+                                  setState(() {
+                                    delete;
+                                  });
+                                },
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.only(top: 10),
+                            shrinkWrap: true,
+                            itemCount: cepController.listFilter().length,
+                            itemBuilder: (context, index) {
+                              final cepFilter = cepController.listFilter()[index];
+                              return Dismissible(
+                                background: Container(
+                                  color: Colors.red,
+                                  child: const Align(
+                                    alignment: Alignment(-0.9, 0),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                direction: DismissDirection.startToEnd,
+                                key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+                                child: ListTile(
+                                  title: Text(
+                                    cepFilter.cepController.isEmpty ? "CEP vazio ou não encontrado" : cepFilter.cepController,
+                                  ),
+                                  leading: CircleAvatar(
+                                    child: Image.asset("assets/imgs/correios.png"),
+                                  ),
+                                  subtitle: Text(
+                                    "${cepFilter.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cepFilter.logradouro}, ${cepFilter.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cepFilter.bairro}, ${cepFilter.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cepFilter.cidade}, ${cepFilter.uf!.isEmpty ? "uf vazio ou não encontrado" : cepFilter.uf}",
+                                  ),
+                                ),
+                                onDismissed: (direction) async {
+                                  var delete = await cepController.deletarTarefa(cepFilter);
+                                  setState(() {
+                                    delete;
+                                  });
+                                },
+                              );
+                            },
                           ),
-                        ),
-                        direction: DismissDirection.startToEnd,
-                        key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
-                        child: ListTile(
-                          title: Text(
-                            cepController.encontrarTarefa()[index].cepController.isEmpty
-                                ? "CEP vazio ou não encontrado"
-                                : cepController.encontrarTarefa()[index].cepController,
-                          ),
-                          leading: CircleAvatar(
-                            child: Image.asset("assets/imgs/correios.png"),
-                          ),
-                          subtitle: Text(
-                            "${cepController.encontrarTarefa()[index].logradouro}, ${cepController.encontrarTarefa()[index].bairro}, ${cepController.encontrarTarefa()[index].cidade}, ${cepController.encontrarTarefa()[index].uf}",
-                          ),
-                        ),
-                        onDismissed: (direction) async {
-                          var delete = await cepController.deletarTarefa(cepController.encontrarTarefa()[index]);
-                          setState(() {
-                            delete;
-                          });
-                        },
-                      );
-                    }),
           ),
         ],
       ),

@@ -5,23 +5,33 @@ import 'package:flutter/material.dart';
 
 class ListaCepController {
   TextEditingController controllerTextField = TextEditingController();
+  TextEditingController cepFilter = TextEditingController();
   List<CepModel> _todos = [];
 
   List<CepModel> get todos => _todos;
 
+  // Salva os dados
   Future<void> salvarTarefa(CepModel cepModel) async {
     ObjectBoxDatabase.tarefaBox.put(cepModel);
     todos.add(cepModel);
     controllerTextField.clear();
   }
 
+  // Exclui os dados
   Future<void> deletarTarefa(CepModel cepModel) async {
     ObjectBoxDatabase.tarefaBox.remove(cepModel.id);
   }
 
+  // Filtra todos os dados
   List<CepModel> encontrarTarefa() {
     _todos = ObjectBoxDatabase.tarefaBox.getAll();
     return todos.toList();
+  }
+
+  //Filtrar só pelo CEP
+  List<CepModel> listFilter() {
+    final filteredPersons = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.equals(cepFilter.text)).build().find();
+    return filteredPersons;
   }
 
   List<CepModel> encontrarTodasTarefa() {

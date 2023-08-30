@@ -25,46 +25,14 @@ final _entities = <ModelEntity>[
       lastPropertyId: const IdUid(8, 4808060336707700220),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 627720648116257088),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1530642162089849666),
-            name: 'logradouro',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 6321005969723323113),
-            name: 'complemento',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 174579268246680686),
-            name: 'bairro',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 7209680028474269576),
-            name: 'cidade',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 105149286326530171),
-            name: 'uf',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 7753727955140648133),
-            name: 'ddd',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 4808060336707700220),
-            name: 'cepController',
-            type: 9,
-            flags: 0)
+        ModelProperty(id: const IdUid(1, 627720648116257088), name: 'id', type: 6, flags: 1),
+        ModelProperty(id: const IdUid(2, 1530642162089849666), name: 'logradouro', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(3, 6321005969723323113), name: 'complemento', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(4, 174579268246680686), name: 'bairro', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(5, 7209680028474269576), name: 'cidade', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(6, 105149286326530171), name: 'uf', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(7, 7753727955140648133), name: 'ddd', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(8, 4808060336707700220), name: 'cepController', type: 9, flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -119,12 +87,12 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (CepModel object, fb.Builder fbb) {
-          final logradouroOffset = fbb.writeString(object.logradouro);
-          final complementoOffset = fbb.writeString(object.complemento);
-          final bairroOffset = fbb.writeString(object.bairro);
-          final cidadeOffset = fbb.writeString(object.cidade);
-          final ufOffset = fbb.writeString(object.uf);
-          final dddOffset = fbb.writeString(object.ddd);
+          final logradouroOffset = object.logradouro == null ? null : fbb.writeString(object.logradouro!);
+          final complementoOffset = object.complemento == null ? null : fbb.writeString(object.complemento!);
+          final bairroOffset = object.bairro == null ? null : fbb.writeString(object.bairro!);
+          final cidadeOffset = object.cidade == null ? null : fbb.writeString(object.cidade!);
+          final ufOffset = object.uf == null ? null : fbb.writeString(object.uf!);
+          final dddOffset = object.ddd == null ? null : fbb.writeString(object.ddd!);
           final cepControllerOffset = fbb.writeString(object.cepController);
           fbb.startTable(9);
           fbb.addInt64(0, object.id);
@@ -141,22 +109,13 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final logradouroParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final complementoParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, '');
-          final bairroParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
-          final cidadeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
-          final ufParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 14, '');
-          final dddParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 16, '');
-          final cepControllerParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, '');
+          final logradouroParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 6);
+          final complementoParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 8);
+          final bairroParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 10);
+          final cidadeParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 12);
+          final ufParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 14);
+          final dddParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 16);
+          final cepControllerParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, '');
           final object = CepModel(
               logradouro: logradouroParam,
               complemento: complementoParam,
@@ -180,20 +139,16 @@ class CepModel_ {
   static final id = QueryIntegerProperty<CepModel>(_entities[0].properties[0]);
 
   /// see [CepModel.logradouro]
-  static final logradouro =
-      QueryStringProperty<CepModel>(_entities[0].properties[1]);
+  static final logradouro = QueryStringProperty<CepModel>(_entities[0].properties[1]);
 
   /// see [CepModel.complemento]
-  static final complemento =
-      QueryStringProperty<CepModel>(_entities[0].properties[2]);
+  static final complemento = QueryStringProperty<CepModel>(_entities[0].properties[2]);
 
   /// see [CepModel.bairro]
-  static final bairro =
-      QueryStringProperty<CepModel>(_entities[0].properties[3]);
+  static final bairro = QueryStringProperty<CepModel>(_entities[0].properties[3]);
 
   /// see [CepModel.cidade]
-  static final cidade =
-      QueryStringProperty<CepModel>(_entities[0].properties[4]);
+  static final cidade = QueryStringProperty<CepModel>(_entities[0].properties[4]);
 
   /// see [CepModel.uf]
   static final uf = QueryStringProperty<CepModel>(_entities[0].properties[5]);
@@ -202,6 +157,5 @@ class CepModel_ {
   static final ddd = QueryStringProperty<CepModel>(_entities[0].properties[6]);
 
   /// see [CepModel.cepController]
-  static final cepController =
-      QueryStringProperty<CepModel>(_entities[0].properties[7]);
+  static final cepController = QueryStringProperty<CepModel>(_entities[0].properties[7]);
 }
