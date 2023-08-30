@@ -34,8 +34,14 @@ class _BuscarCepState extends State<BuscarCep> {
     http.Response response;
     response = await http.get(url);
     Map<String, dynamic> retorno = json.decode(response.body);
+    var erro = retorno["erro"];
 
     if (response.statusCode == 200) {
+      if (erro != null) {
+        await _showErrorDialog("CEP não existe ou não localizado.");
+        cepController.controllerTextField.clear();
+        return;
+      }
       CepModel cepBaseModel = CepModel(
         cepController: retorno["cep"],
         bairro: retorno["bairro"],
@@ -56,7 +62,7 @@ class _BuscarCepState extends State<BuscarCep> {
       });
     } else {
       String message = "Ocorreu um erro. Tente novamente mais tarde!";
-      _showErrorDialog(message);
+      await _showErrorDialog(message);
     }
   }
 
@@ -104,7 +110,7 @@ class _BuscarCepState extends State<BuscarCep> {
     );
   }
 
-  void _showErrorDialog(String? message) async {
+  Future<void> _showErrorDialog(String? message) async {
     return await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
