@@ -4,21 +4,21 @@ import 'package:objectbox/objectbox.dart';
 class CepModel {
   @Id()
   int id = 0;
-  String logradouro;
-  String complemento;
-  String bairro;
-  String cidade;
-  String uf;
-  String ddd;
+  String? logradouro;
+  String? complemento;
+  String? bairro;
+  String? cidade;
+  String? uf;
+  String? ddd;
   String cepController;
 
   CepModel({
-    required this.logradouro,
-    required this.complemento,
-    required this.bairro,
-    required this.cidade,
-    required this.uf,
-    required this.ddd,
+    this.logradouro,
+    this.complemento,
+    this.bairro,
+    this.cidade,
+    this.uf,
+    this.ddd,
     required this.cepController,
   });
 }
