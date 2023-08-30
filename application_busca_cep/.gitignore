@@ -42,6 +42,7 @@ app.*.symbols
 app.*.map.json
 
 *.g.dart
+*objectbox.g.dart'
 
 # Android Studio will place build artifacts here
 /android/app/debug
