@@ -46,12 +46,12 @@ class _BuscarCepState extends State<BuscarCep> {
         uf: retorno["uf"],
       );
       setState(() {
-        _logradouro = cepBaseModel.logradouro;
-        _complemento = cepBaseModel.complemento;
-        _bairro = cepBaseModel.bairro;
-        _cidade = cepBaseModel.cidade;
-        _uf = cepBaseModel.uf;
-        _ddd = cepBaseModel.ddd;
+        _logradouro = cepBaseModel.logradouro!;
+        _complemento = cepBaseModel.complemento!;
+        _bairro = cepBaseModel.bairro!;
+        _cidade = cepBaseModel.cidade!;
+        _uf = cepBaseModel.uf!;
+        _ddd = cepBaseModel.ddd!;
         showAlertDialog(context);
       });
     } else {
@@ -335,7 +335,7 @@ class _BuscarCepState extends State<BuscarCep> {
                                     child: Image.asset("assets/imgs/correios.png"),
                                   ),
                                   subtitle: Text(
-                                    "${cep.logradouro}, ${cep.bairro}, ${cep.cidade}, ${cep.uf}",
+                                    "${cep.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cep.logradouro}, ${cep.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cep.bairro}, ${cep.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cep.cidade}, ${cep.uf!.isEmpty ? "uf vazio ou não encontrado" : cep.uf}",
                                   ),
                                 ),
                                 onDismissed: (direction) async {
@@ -374,7 +374,7 @@ class _BuscarCepState extends State<BuscarCep> {
                                     child: Image.asset("assets/imgs/correios.png"),
                                   ),
                                   subtitle: Text(
-                                    "${cepFilter.logradouro}, ${cepFilter.bairro}, ${cepFilter.cidade}, ${cepFilter.uf}",
+                                    "${cepFilter.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cepFilter.logradouro}, ${cepFilter.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cepFilter.bairro}, ${cepFilter.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cepFilter.cidade}, ${cepFilter.uf!.isEmpty ? "uf vazio ou não encontrado" : cepFilter.uf}",
                                   ),
                                 ),
                                 onDismissed: (direction) async {
