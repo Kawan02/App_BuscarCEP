@@ -28,16 +28,15 @@ class ListaCepController {
     return todos.toList();
   }
 
-  //Filtrar só pelo CEP
+  //Filtra só pelo CEP, digitando os numeros do CEP inicial ele já busca
   List<CepModel> listFilter() {
-    final filteredPersons = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.equals(cepFilter.text)).build().find();
+    var filteredPersons = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.startsWith(cepFilter.text)).build().find();
     return filteredPersons;
   }
 
+//Filtra só pelo CEP se estiver igual
   List<CepModel> encontrarTodasTarefa() {
-    final query = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.equals(controllerTextField.text)).build();
-    _todos = query.find();
-    query.close();
-    return todos.toList();
+    final query = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.equals(controllerTextField.text)).build().find();
+    return query;
   }
 }
