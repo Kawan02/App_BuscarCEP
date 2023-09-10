@@ -1,3 +1,4 @@
+import 'package:application_busca_cep/controller/dependency_injection.dart';
 import 'package:application_busca_cep/database/objectbox_database.dart';
 import 'package:flutter/material.dart';
 import 'MyApp.dart';
@@ -5,6 +6,7 @@ import 'MyApp.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ObjectBoxDatabase.create();
+  DependecyInjection.init();
 
   runApp(const MyApp());
 }
