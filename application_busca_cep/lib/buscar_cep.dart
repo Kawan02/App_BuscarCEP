@@ -91,7 +91,14 @@ class _BuscarCepState extends State<BuscarCep> {
               cep.cepController.isEmpty ? "CEP vazio ou não encontrado" : cep.cepController,
             ),
             leading: CircleAvatar(
-              child: Image.asset("assets/imgs/correios.png"),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/imgs/correios.png"),
+                  ),
+                ),
+              ),
             ),
             subtitle: Text(
               "${cep.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cep.logradouro}, ${cep.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cep.bairro}, ${cep.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cep.cidade}, ${cep.uf!.isEmpty ? "uf vazio ou não encontrado" : cep.uf}",
@@ -133,7 +140,14 @@ class _BuscarCepState extends State<BuscarCep> {
               cepFilter.cepController.isEmpty ? "CEP vazio ou não encontrado" : cepFilter.cepController,
             ),
             leading: CircleAvatar(
-              child: Image.asset("assets/imgs/correios.png"),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/imgs/correios.png"),
+                  ),
+                ),
+              ),
             ),
             subtitle: Text(
               "${cepFilter.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cepFilter.logradouro}, ${cepFilter.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cepFilter.bairro}, ${cepFilter.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cepFilter.cidade}, ${cepFilter.uf!.isEmpty ? "uf vazio ou não encontrado" : cepFilter.uf}",
@@ -194,25 +208,26 @@ class _BuscarCepState extends State<BuscarCep> {
     );
   }
 
-  Future<void> _showErrorDialog(String? message) async {
+  _showErrorDialog(String? message) async {
     return await showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text("Atenção"),
-        content: Text(message!,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            )),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text("Atenção"),
+          content: Text(
+            message!,
+            style: const TextStyle(fontSize: 20),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -326,7 +341,6 @@ class _BuscarCepState extends State<BuscarCep> {
       appBar: AppBar(
         title: const Text("Buscar CEP"),
         centerTitle: true,
-        backgroundColor: Colors.deepOrange[400],
         actions: [
           IconButton(
             icon: Icon(listFilter == false ? Icons.filter_alt : Icons.filter_alt_off),
