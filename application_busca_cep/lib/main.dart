@@ -1,7 +1,7 @@
-import 'package:application_busca_cep/controller/dependency_injection.dart';
-import 'package:application_busca_cep/database/objectbox_database.dart';
+import 'package:application_busca_cep/src/controller/dependency_injection.dart';
+import 'package:application_busca_cep/src/database/objectbox_database.dart';
 import 'package:flutter/material.dart';
-import 'MyApp.dart';
+import 'my_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

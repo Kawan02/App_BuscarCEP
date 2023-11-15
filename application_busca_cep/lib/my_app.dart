@@ -1,5 +1,5 @@
-import 'package:application_busca_cep/buscar_cep.dart';
-import 'package:application_busca_cep/widgets/tema.dart';
+import 'package:application_busca_cep/src/home/buscar_cep.dart';
+import 'package:application_busca_cep/src/widgets/tema.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';

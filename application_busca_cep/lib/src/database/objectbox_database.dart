@@ -1,7 +1,6 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
-import 'package:application_busca_cep/database/objectbox.g.dart';
-import 'package:application_busca_cep/model/cep_model.dart';
+import 'package:application_busca_cep/src/database/objectbox.g.dart';
+import 'package:application_busca_cep/src/model/cep_model.dart';
 
 class ObjectBoxDatabase {
   //É uma representação do objectbox
