@@ -1,11 +1,10 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:application_busca_cep/controller/listas_tarefas_controller.dart';
-import 'package:application_busca_cep/model/cep_model.dart';
+import 'package:application_busca_cep/src/controller/listas_tarefas_controller.dart';
+import 'package:application_busca_cep/src/model/cep_model.dart';
 
 class BuscarCep extends StatefulWidget {
   const BuscarCep({Key? key}) : super(key: key);
