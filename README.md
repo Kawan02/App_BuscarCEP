@@ -1,8 +1,13 @@
-# App_BuscaCEP
+# 🗺️ App_BuscaCEP
 Aplicativo buscar CEP desenvolvido em Flutter, consumindo a API ViaCep e salvando os dados no banco de dados Objectbox.
 
-## **Tema White:**
-![White](https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/master/application_busca_cep/assets/imgs/tema_white.PNG)
+## Funcionalidades:
+ - Criar novos cep´s de acordo com o que está vindo da API
+ - Filtro para buscar através de um determinado CEP
+ - Excluir os dados de um determinado CEP do Banco de Dados
 
-## **Tema Dark:**
-![Dark](https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/master/application_busca_cep/assets/imgs/tema_black.PNG)
+## Temas Implementados:
+<div style="display: inline_block">
+  <img align="center" alt="tema-white" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/master/application_busca_cep/assets/imgs/tema_white.PNG">   
+  <img align="center" alt="tema-dark" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/master/application_busca_cep/assets/imgs/tema_black.PNG">
+</div>
