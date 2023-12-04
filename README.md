@@ -5,6 +5,7 @@ Aplicativo buscar CEP desenvolvido em Flutter, consumindo a API ViaCep e salvand
  - Criar novos cep´s de acordo com o que está vindo da API
  - Filtro para buscar através de um determinado CEP
  - Excluir os dados de um determinado CEP do Banco de Dados
+ - Tema Escuro ou Claro. O aplicativo pega o tema de acordo com o que está determinado no sistema do aparelho.
 
 ## Temas Implementados:
 <div style="display: inline_block">
