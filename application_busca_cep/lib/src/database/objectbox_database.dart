@@ -8,6 +8,7 @@ class ObjectBoxDatabase {
 
   //Fornece o acesso a um tipo específico. Como nesse caso, o objeto Tarefa.
   static late final Box<CepModel> tarefaBox;
+  static late final Query<CepModel> query;
 
   ObjectBoxDatabase._create(this.store) {
     // Adicione qualquer código de configuração adicional,
@@ -20,5 +21,6 @@ class ObjectBoxDatabase {
     final store = await openStore(directory: (docsDir.path));
     ObjectBoxDatabase._create(store);
     tarefaBox = store.box<CepModel>();
+    // tarefaBox.removeAll();
   }
 }

@@ -1,10 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
-@Entity()
-class CepModel {
+class TesteModel {
   @Id()
-  @Sync()
   int id = 0;
   String? cepController;
   String? logradouro;
@@ -18,26 +16,23 @@ class CepModel {
   String? siafi;
   bool? erro;
   String? dataTime;
-  String? image;
 
-  CepModel({
-    this.cepController,
-    this.logradouro,
-    this.complemento,
-    this.bairro,
-    this.cidade,
-    this.uf,
-    this.ibge,
-    this.gia,
-    this.ddd,
-    this.siafi,
-    this.erro,
-    this.dataTime,
-    this.image,
-  });
+  TesteModel(
+      {this.cepController,
+      this.logradouro,
+      this.complemento,
+      this.bairro,
+      this.cidade,
+      this.uf,
+      this.ibge,
+      this.gia,
+      this.ddd,
+      this.siafi,
+      this.erro,
+      this.dataTime});
 
-  factory CepModel.fromJson(Map<String, dynamic> json) {
-    return CepModel(
+  factory TesteModel.fromJson(Map<String, dynamic> json) {
+    return TesteModel(
       cepController: json['cep'],
       logradouro: json['logradouro'],
       complemento: json['complemento'],
@@ -49,8 +44,7 @@ class CepModel {
       ddd: json['ddd'],
       siafi: json['siafi'],
       erro: json["erro"],
-      dataTime: DateFormat('dd-MM-yyyy – kk:mm:a').format(DateTime.now()),
-      image: json["image"],
+      dataTime: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
     );
   }
 
@@ -68,7 +62,32 @@ class CepModel {
     data['siafi'] = siafi;
     data['erro'] = erro;
     data['data'] = dataTime;
-    data['image'] = image;
     return data;
   }
 }
+
+
+// import 'package:objectbox/objectbox.dart';
+
+// @Entity()
+// class CepModel {
+//   @Id()
+//   int id = 0;
+//   String? logradouro;
+//   String? complemento;
+//   String? bairro;
+//   String? cidade;
+//   String? uf;
+//   String? ddd;
+//   String cepController;
+
+//   CepModel({
+//     this.logradouro,
+//     this.complemento,
+//     this.bairro,
+//     this.cidade,
+//     this.uf,
+//     this.ddd,
+//     required this.cepController,
+//   });
+// }

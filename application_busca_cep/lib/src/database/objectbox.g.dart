@@ -14,7 +14,7 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import '../model/cep_model.dart';
+import '../../src/model/cep_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -22,17 +22,79 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 4303363070549794841),
       name: 'CepModel',
-      lastPropertyId: const IdUid(8, 4808060336707700220),
+      lastPropertyId: const IdUid(15, 1464702758361713733),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(id: const IdUid(1, 627720648116257088), name: 'id', type: 6, flags: 1),
-        ModelProperty(id: const IdUid(2, 1530642162089849666), name: 'logradouro', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(3, 6321005969723323113), name: 'complemento', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(4, 174579268246680686), name: 'bairro', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(5, 7209680028474269576), name: 'cidade', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(6, 105149286326530171), name: 'uf', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(7, 7753727955140648133), name: 'ddd', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(8, 4808060336707700220), name: 'cepController', type: 9, flags: 0)
+        ModelProperty(
+            id: const IdUid(1, 627720648116257088),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1530642162089849666),
+            name: 'logradouro',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 6321005969723323113),
+            name: 'complemento',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 174579268246680686),
+            name: 'bairro',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 7209680028474269576),
+            name: 'cidade',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 105149286326530171),
+            name: 'uf',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7753727955140648133),
+            name: 'ddd',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 4808060336707700220),
+            name: 'cepController',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3195624927747833872),
+            name: 'dataTime',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 1444367331685706426),
+            name: 'ibge',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 1486048363323526369),
+            name: 'gia',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 4393675354134275440),
+            name: 'siafi',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 169165269025953561),
+            name: 'erro',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 1464702758361713733),
+            name: 'image',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -71,7 +133,7 @@ ModelDefinition getObjectBoxModel() {
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [8689056668470123685],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -87,14 +149,35 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (CepModel object, fb.Builder fbb) {
-          final logradouroOffset = object.logradouro == null ? null : fbb.writeString(object.logradouro!);
-          final complementoOffset = object.complemento == null ? null : fbb.writeString(object.complemento!);
-          final bairroOffset = object.bairro == null ? null : fbb.writeString(object.bairro!);
-          final cidadeOffset = object.cidade == null ? null : fbb.writeString(object.cidade!);
-          final ufOffset = object.uf == null ? null : fbb.writeString(object.uf!);
-          final dddOffset = object.ddd == null ? null : fbb.writeString(object.ddd!);
-          final cepControllerOffset = fbb.writeString(object.cepController);
-          fbb.startTable(9);
+          final logradouroOffset = object.logradouro == null
+              ? null
+              : fbb.writeString(object.logradouro!);
+          final complementoOffset = object.complemento == null
+              ? null
+              : fbb.writeString(object.complemento!);
+          final bairroOffset =
+              object.bairro == null ? null : fbb.writeString(object.bairro!);
+          final cidadeOffset =
+              object.cidade == null ? null : fbb.writeString(object.cidade!);
+          final ufOffset =
+              object.uf == null ? null : fbb.writeString(object.uf!);
+          final dddOffset =
+              object.ddd == null ? null : fbb.writeString(object.ddd!);
+          final cepControllerOffset = object.cepController == null
+              ? null
+              : fbb.writeString(object.cepController!);
+          final dataTimeOffset = object.dataTime == null
+              ? null
+              : fbb.writeString(object.dataTime!);
+          final ibgeOffset =
+              object.ibge == null ? null : fbb.writeString(object.ibge!);
+          final giaOffset =
+              object.gia == null ? null : fbb.writeString(object.gia!);
+          final siafiOffset =
+              object.siafi == null ? null : fbb.writeString(object.siafi!);
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, logradouroOffset);
           fbb.addOffset(2, complementoOffset);
@@ -103,27 +186,60 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(5, ufOffset);
           fbb.addOffset(6, dddOffset);
           fbb.addOffset(7, cepControllerOffset);
+          fbb.addOffset(8, dataTimeOffset);
+          fbb.addOffset(10, ibgeOffset);
+          fbb.addOffset(11, giaOffset);
+          fbb.addOffset(12, siafiOffset);
+          fbb.addBool(13, object.erro);
+          fbb.addOffset(14, imageOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final logradouroParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 6);
-          final complementoParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 8);
-          final bairroParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 10);
-          final cidadeParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 12);
-          final ufParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 14);
-          final dddParam = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 16);
-          final cepControllerParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, '');
+          final cepControllerParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18);
+          final logradouroParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 6);
+          final complementoParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8);
+          final bairroParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final cidadeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 12);
+          final ufParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 14);
+          final ibgeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 24);
+          final giaParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 26);
+          final dddParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final siafiParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 28);
+          final erroParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 30);
+          final dataTimeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 20);
+          final imageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 32);
           final object = CepModel(
+              cepController: cepControllerParam,
               logradouro: logradouroParam,
               complemento: complementoParam,
               bairro: bairroParam,
               cidade: cidadeParam,
               uf: ufParam,
+              ibge: ibgeParam,
+              gia: giaParam,
               ddd: dddParam,
-              cepController: cepControllerParam)
+              siafi: siafiParam,
+              erro: erroParam,
+              dataTime: dataTimeParam,
+              image: imageParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -139,16 +255,20 @@ class CepModel_ {
   static final id = QueryIntegerProperty<CepModel>(_entities[0].properties[0]);
 
   /// see [CepModel.logradouro]
-  static final logradouro = QueryStringProperty<CepModel>(_entities[0].properties[1]);
+  static final logradouro =
+      QueryStringProperty<CepModel>(_entities[0].properties[1]);
 
   /// see [CepModel.complemento]
-  static final complemento = QueryStringProperty<CepModel>(_entities[0].properties[2]);
+  static final complemento =
+      QueryStringProperty<CepModel>(_entities[0].properties[2]);
 
   /// see [CepModel.bairro]
-  static final bairro = QueryStringProperty<CepModel>(_entities[0].properties[3]);
+  static final bairro =
+      QueryStringProperty<CepModel>(_entities[0].properties[3]);
 
   /// see [CepModel.cidade]
-  static final cidade = QueryStringProperty<CepModel>(_entities[0].properties[4]);
+  static final cidade =
+      QueryStringProperty<CepModel>(_entities[0].properties[4]);
 
   /// see [CepModel.uf]
   static final uf = QueryStringProperty<CepModel>(_entities[0].properties[5]);
@@ -157,5 +277,28 @@ class CepModel_ {
   static final ddd = QueryStringProperty<CepModel>(_entities[0].properties[6]);
 
   /// see [CepModel.cepController]
-  static final cepController = QueryStringProperty<CepModel>(_entities[0].properties[7]);
+  static final cepController =
+      QueryStringProperty<CepModel>(_entities[0].properties[7]);
+
+  /// see [CepModel.dataTime]
+  static final dataTime =
+      QueryStringProperty<CepModel>(_entities[0].properties[8]);
+
+  /// see [CepModel.ibge]
+  static final ibge = QueryStringProperty<CepModel>(_entities[0].properties[9]);
+
+  /// see [CepModel.gia]
+  static final gia = QueryStringProperty<CepModel>(_entities[0].properties[10]);
+
+  /// see [CepModel.siafi]
+  static final siafi =
+      QueryStringProperty<CepModel>(_entities[0].properties[11]);
+
+  /// see [CepModel.erro]
+  static final erro =
+      QueryBooleanProperty<CepModel>(_entities[0].properties[12]);
+
+  /// see [CepModel.image]
+  static final image =
+      QueryStringProperty<CepModel>(_entities[0].properties[13]);
 }
