@@ -5,7 +5,6 @@ import 'package:application_busca_cep/src/controller/buscar_cep.dart';
 import 'package:application_busca_cep/src/home/cep/cep.dart';
 import 'package:application_busca_cep/src/home/cep/filter/cep_filter.dart';
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class BuscarCep extends StatefulWidget {
@@ -22,6 +21,7 @@ class _BuscarCepState extends State<BuscarCep> {
   final TextEditingController controllerFilter = TextEditingController();
   bool listFilter = false;
   final cepFormatter = MaskTextInputFormatter(mask: "#####-###", filter: {"#": RegExp(r"[0-9]")});
+  final BuscarCepController buscarCepController = BuscarCepController();
 
   FutureOr<void> consultar() async {
     if (!_formKey.currentState!.validate()) return;
@@ -34,112 +34,90 @@ class _BuscarCepState extends State<BuscarCep> {
     );
   }
 
-  _showErrorDialog(String? message) async {
+  FutureOr<void> _filterCep(TextEditingController filter) async {
     return await showDialog(
       context: context,
-      builder: (BuildContext ctx) {
+      builder: (ctx) {
         return AlertDialog(
-          title: const Text("Atenção"),
-          content: Text(
-            message!,
-            style: const TextStyle(fontSize: 20),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Filtro"),
+              GestureDetector(
+                child: const MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(Icons.close, size: 20),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Form(
+              key: _formKeyFilter,
+              child: TextFormField(
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return "Informe o CEP";
+                  }
+                  return null;
+                },
+                controller: controllerFilter,
+                inputFormatters: [cepFormatter],
+                keyboardType: TextInputType.number,
+                autofocus: true,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.maps_home_work),
+                  labelText: "Insira um CEP",
+                  hintText: "Digite um CEP aqui...",
+                  isDense: true,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
+                ),
+              ),
+            ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                ),
+                onPressed: () async {
+                  if (!_formKeyFilter.currentState!.validate()) return;
+
+                  setState(() {
+                    listFilter = true;
+                    buscarCepController.listFilter(controllerFilter);
+                    Navigator.of(ctx).pop();
+                  });
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.check),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        'Pesquisar CEP',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         );
       },
     );
-  }
-
-  FutureOr<void> _filterCep(TextEditingController filter) async {
-    return await showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Filtro"),
-                GestureDetector(
-                  child: const MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Icon(Icons.close, size: 20),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-            content: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Form(
-                key: _formKeyFilter,
-                child: TextFormField(
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return "Informe o CEP";
-                    }
-                    return null;
-                  },
-                  controller: controllerFilter,
-                  inputFormatters: [cepFormatter],
-                  keyboardType: TextInputType.number,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.maps_home_work),
-                    labelText: "Insira um CEP",
-                    hintText: "Digite um CEP aqui...",
-                    isDense: true,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
-                  ),
-                ),
-              ),
-            ),
-            actions: <Widget>[
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                padding: const EdgeInsets.only(bottom: 15.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                  onPressed: () async {
-                    if (!_formKeyFilter.currentState!.validate()) return;
-
-                    setState(() {
-                      listFilter = true;
-                      buscarCepController.listFilter(controllerFilter);
-                      Navigator.of(ctx).pop();
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.check),
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          'Pesquisar CEP',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
   }
 
   FutureOr _refresh() {
@@ -150,29 +128,21 @@ class _BuscarCepState extends State<BuscarCep> {
     return buscarCepController.listFilter(controllerFilter);
   }
 
-  BuscarCepController buscarCepController = BuscarCepController();
   @override
   void initState() {
-    buscarCepController.addListener(() {
-      // WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) {
-        setState(() {});
-      }
-      // });
-    });
     _refresh();
-
+    buscarCepController.addListener(() {
+      setState(() {});
+    });
     super.initState();
   }
 
   @override
   void dispose() {
-    // buscarCepController.controllerTextField.dispose();
-    // buscarCepController.cepFilter.dispose();
+    _refresh();
     buscarCepController.removeListener(() {
       setState(() {});
     });
-    _refresh();
     super.dispose();
   }
 
@@ -195,11 +165,10 @@ class _BuscarCepState extends State<BuscarCep> {
               if (listFilter != false) {
                 setState(() {
                   listFilter = false;
+                  controllerFilter.clear();
                 });
                 return;
               }
-              // buscarCepController.cepFilter.clear();
-              // await _filterCep(buscarCepController.cepFilter);
               await _filterCep(controllerFilter);
             },
           ),
@@ -232,10 +201,7 @@ class _BuscarCepState extends State<BuscarCep> {
                           labelText: "Insira um CEP",
                           hintText: "Digite um CEP aqui...",
                           suffixIcon: IconButton(
-                            onPressed: () async {
-                              await consultar();
-                              // await _consultarCep();
-                            },
+                            onPressed: () async => await consultar(),
                             icon: const Icon(
                               Icons.search,
                               color: Colors.deepOrange,

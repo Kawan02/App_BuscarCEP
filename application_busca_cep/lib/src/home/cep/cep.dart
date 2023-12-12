@@ -1,5 +1,4 @@
 import 'package:application_busca_cep/src/controller/buscar_cep.dart';
-import 'package:application_busca_cep/src/widgets/cep_modal.dart';
 import 'package:application_busca_cep/src/widgets/google_maps.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +21,7 @@ class _CepState extends State<Cep> {
         : ListView.builder(
             padding: const EdgeInsets.only(top: 10),
             shrinkWrap: true,
-            itemCount: widget.buscarCepController?.encontrarTarefa().length,
+            itemCount: widget.buscarCepController!.encontrarTarefa().length,
             itemBuilder: (context, index) {
               final cep = widget.buscarCepController!.encontrarTarefa()[index];
 
@@ -60,12 +59,19 @@ class _CepState extends State<Cep> {
                     ),
                   ),
                   subtitle: Text(
-                    "${cep.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cep.logradouro}, ${cep.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cep.bairro}, ${cep.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cep.cidade}, ${cep.uf!.isEmpty ? "uf vazio ou não encontrado" : cep.uf}",
+                    "${cep.logradouro}, ${cep.bairro}, ${cep.cidade}, ${cep.uf}. ${cep.ddd}",
                   ),
-                  trailing: Text("Criado em: ${cep.dataTime}"),
-                  onLongPress: () async {
-                    await abrirGoogleMaps(cep.cepController!);
-                  },
+                  trailing: IconButton(
+                    onPressed: () async {
+                      await abrirGoogleMaps(cep.cepController!);
+                    },
+                    icon: const Icon(
+                      Icons.location_on,
+                      color: Colors.greenAccent,
+                      size: 30,
+                    ),
+                  ),
+                  dense: true,
                 ),
                 onDismissed: (direction) async {
                   await widget.buscarCepController!.deletarTarefa(cep);
