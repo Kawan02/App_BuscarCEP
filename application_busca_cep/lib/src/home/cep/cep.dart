@@ -1,5 +1,6 @@
 import 'package:application_busca_cep/src/controller/buscar_cep.dart';
-import 'package:application_busca_cep/src/widgets/modal_image.dart';
+import 'package:application_busca_cep/src/widgets/cep_modal.dart';
+import 'package:application_busca_cep/src/widgets/google_maps.dart';
 import 'package:flutter/material.dart';
 
 class Cep extends StatefulWidget {
@@ -49,13 +50,11 @@ class _CepState extends State<Cep> {
                     ],
                   ),
                   leading: CircleAvatar(
-                    child:
-                        // modalImage(cep, context, widget.buscarCepController!),
-                        Container(
+                    child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                          image: image(cep.image),
+                        image: const DecorationImage(
+                          image: AssetImage("assets/imgs/correios.png"),
                         ),
                       ),
                     ),
@@ -63,13 +62,14 @@ class _CepState extends State<Cep> {
                   subtitle: Text(
                     "${cep.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cep.logradouro}, ${cep.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cep.bairro}, ${cep.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cep.cidade}, ${cep.uf!.isEmpty ? "uf vazio ou não encontrado" : cep.uf}",
                   ),
-                  // trailing: Text("Criado em: ${cep.dataTime}"),
+                  trailing: Text("Criado em: ${cep.dataTime}"),
+                  onLongPress: () async {
+                    await abrirGoogleMaps(cep.cepController!);
+                  },
                 ),
                 onDismissed: (direction) async {
                   await widget.buscarCepController!.deletarTarefa(cep);
-                  // setState(() {
-                  //   delete;
-                  // });
+                  setState(() {});
                 },
               );
             },

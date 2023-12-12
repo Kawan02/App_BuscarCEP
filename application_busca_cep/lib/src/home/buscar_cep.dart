@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:core';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:application_busca_cep/src/controller/buscar_cep.dart';
 import 'package:application_busca_cep/src/home/cep/cep.dart';
 import 'package:application_busca_cep/src/home/cep/filter/cep_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:application_busca_cep/src/controller/listas_tarefas_controller.dart';
-import 'package:application_busca_cep/src/model/cep_model.dart';
 
 class BuscarCep extends StatefulWidget {
   const BuscarCep({Key? key}) : super(key: key);
@@ -19,7 +16,6 @@ class BuscarCep extends StatefulWidget {
 }
 
 class _BuscarCepState extends State<BuscarCep> {
-  ListaCepController cepController = ListaCepController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   final GlobalKey<FormState> _formKeyFilter = GlobalKey();
   final TextEditingController controller = TextEditingController();
@@ -35,130 +31,6 @@ class _BuscarCepState extends State<BuscarCep> {
       context: context,
       buscarCepController: buscarCepController,
       controller: controller,
-    );
-    // setState(() {
-    //   showAlertDialog(context);
-    // });
-  }
-
-  Future<void> _consultarCep() async {
-    if (!_formKey.currentState!.validate()) return;
-    final Uri url = Uri.parse("https://viacep.com.br/ws/$controllerFilter/json/");
-    http.Response response;
-    response = await http.get(url);
-    Map<String, dynamic> retorno = json.decode(response.body);
-    var erro = retorno["erro"];
-
-    if (response.statusCode == 200) {
-      if (erro != null) {
-        await _showErrorDialog("CEP não existe ou não localizado.");
-        // buscarCepController.controllerTextField.clear();
-        return;
-      }
-      CepModel cepBaseModel = CepModel(
-        cepController: retorno["cep"],
-        bairro: retorno["bairro"],
-        cidade: retorno["localidade"],
-        complemento: retorno["complemento"],
-        ddd: retorno["ddd"],
-        logradouro: retorno["logradouro"],
-        uf: retorno["uf"],
-      );
-      setState(() {
-        // _logradouro = cepBaseModel.logradouro!;
-        // _complemento = cepBaseModel.complemento!;
-        // _bairro = cepBaseModel.bairro!;
-        // _cidade = cepBaseModel.cidade!;
-        // _uf = cepBaseModel.uf!;
-        // _ddd = cepBaseModel.ddd!;
-        showAlertDialog(context, cepBaseModel);
-      });
-    } else {
-      await _showErrorDialog("Ocorreu um erro. Tente novamente mais tarde!");
-    }
-  }
-
-  Widget _list(BuscarCepController encontrarTarefa) {
-    return buscarCepController.isLoading.value
-        ? const Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            padding: const EdgeInsets.only(top: 10),
-            shrinkWrap: true,
-            itemCount: encontrarTarefa.encontrarTarefa().length,
-            itemBuilder: (context, index) {
-              final cep = encontrarTarefa.encontrarTarefa()[index];
-
-              return Dismissible(
-                background: Container(
-                  color: Colors.red,
-                  child: const Align(
-                    alignment: Alignment(-0.9, 0),
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                direction: DismissDirection.startToEnd,
-                key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
-                child: ListTile(
-                  title: Text(
-                    cep.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cep.cepController!,
-                  ),
-                  leading: CircleAvatar(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/imgs/correios.png"),
-                        ),
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    "${cep.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cep.logradouro}, ${cep.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cep.bairro}, ${cep.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cep.cidade}, ${cep.uf!.isEmpty ? "uf vazio ou não encontrado" : cep.uf}",
-                  ),
-                ),
-                onDismissed: (direction) async {
-                  await buscarCepController.deletarTarefa(cep);
-                  // setState(() {
-                  //   delete;
-                  // });
-                },
-              );
-            },
-          );
-  }
-
-  void showAlertDialog(BuildContext context, CepModel model) async {
-    return await showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text(controller.text),
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text("CEP: ${model.cepController}", textAlign: TextAlign.center),
-              Text("Logradouro: ${model.logradouro}", textAlign: TextAlign.center),
-              Text("Bairro: ${model.bairro}", textAlign: TextAlign.center),
-              Text("Cidade: ${model.cidade}", textAlign: TextAlign.center),
-              Text("UF: ${model.uf}", textAlign: TextAlign.center),
-              Text("DDD: ${model.ddd}", textAlign: TextAlign.center),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                await buscarCepController.salvarTarefa(model);
-                // ignore: use_build_context_synchronously
-                Navigator.of(ctx).pop();
-              },
-              child: const Text("OK"),
-            ),
-          ],
-        );
-      },
     );
   }
 
