@@ -4,13 +4,17 @@ import 'package:application_busca_cep/src/database/objectbox.g.dart';
 import 'package:application_busca_cep/src/database/objectbox_database.dart';
 import 'package:application_busca_cep/src/model/cep_model.dart';
 import 'package:application_busca_cep/src/services/api_service.dart';
-import 'package:application_busca_cep/src/widgets/modal_image.dart';
+import 'package:application_busca_cep/src/widgets/cep_modal.dart';
 import 'package:flutter/material.dart';
 
 class BuscarCepController extends ChangeNotifier {
   final ApiService apiService = ApiService();
   final ValueNotifier<CepModel?> adress = ValueNotifier(null);
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
+
+  List<CepModel> _todos = [];
+
+  List<CepModel> get todos => _todos;
 
   FutureOr<void> searchAdress({
     required String cep,
@@ -25,7 +29,6 @@ class BuscarCepController extends ChangeNotifier {
     if (model != null) {
       adress.value = model;
       showAlertDialog(context!, model, buscarCepController!, controller!);
-      // await salvarTarefa(model);
       isLoading.value = false;
       notifyListeners();
     } else {
@@ -35,35 +38,10 @@ class BuscarCepController extends ChangeNotifier {
     }
   }
 
-  // TextEditingController controllerTextField = TextEditingController();
-  // TextEditingController cepFilter = TextEditingController();
-  List<CepModel> _todos = [];
-
-  List<CepModel> get todos => _todos;
-
   // Salva os dados
   FutureOr<void> salvarTarefa(CepModel cepModel) async {
     await ObjectBoxDatabase.tarefaBox.putAsync(cepModel);
     todos.add(cepModel);
-    // controllerTextField.clear();
-    notifyListeners();
-  }
-
-  FutureOr<void> salvarTarefaImagem(String? imagem) async {
-    await ObjectBoxDatabase.tarefaBox.putAsync(
-      CepModel(
-        image: imagem,
-        bairro: "",
-        cepController: "",
-        cidade: "",
-        complemento: "",
-        dataTime: "",
-        ddd: "",
-        logradouro: "",
-        uf: "",
-      ),
-    );
-    // todos.add(cepModel);
     // controllerTextField.clear();
     notifyListeners();
   }
