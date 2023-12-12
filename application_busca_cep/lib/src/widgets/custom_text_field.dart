@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
-  final IconData icon;
-  final String labelText;
-  final bool isSecret;
   final List<TextInputFormatter>? inputFormatters;
+  final TextEditingController? controller;
+  final GlobalKey? formKey;
+  final String? labelText;
+  final String? hintText;
+  final Widget? imageWidget;
+  final EdgeInsetsGeometry padding;
   const CustomTextField({
     super.key,
-    required this.icon,
-    required this.labelText,
-    this.isSecret = false,
     this.inputFormatters,
+    this.controller,
+    this.formKey,
+    this.labelText,
+    this.hintText,
+    required this.padding,
+    this.imageWidget,
   });
 
   @override
@@ -19,45 +25,30 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  bool isObscure = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    isObscure = widget.isSecret;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: TextFormField(
-        validator: (text) {
-          if (text == null || text.isEmpty) {
-            return 'Esse campo é obrigatorio';
-          }
-          return null;
-        },
-        inputFormatters: widget.inputFormatters,
-        obscureText: isObscure,
-        decoration: InputDecoration(
-          prefixIcon: Icon(widget.icon),
-          labelText: widget.labelText,
-          suffixIcon: Visibility(
-            visible: widget.isSecret,
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  isObscure = !isObscure;
-                });
-              },
-              icon: Icon(isObscure ? Icons.visibility : Icons.visibility_off),
-            ),
-          ),
-          isDense: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(18),
+      padding: widget.padding,
+      child: Form(
+        key: widget.formKey,
+        child: TextFormField(
+          validator: (String? text) {
+            if (text == null || text.isEmpty) {
+              return "Informe o CEP";
+            }
+            return null;
+          },
+          controller: widget.controller,
+          inputFormatters: widget.inputFormatters,
+          keyboardType: TextInputType.number,
+          autofocus: true,
+          decoration: InputDecoration(
+            prefixIcon: widget.imageWidget,
+            // const Icon(Icons.maps_home_work),
+            labelText: widget.labelText,
+            hintText: widget.hintText,
+            isDense: true,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
           ),
         ),
       ),

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:4303363070549794841",
-      "lastPropertyId": "8:4808060336707700220",
+      "lastPropertyId": "15:1464702758361713733",
       "name": "CepModel",
       "properties": [
         {
@@ -48,6 +48,36 @@
           "id": "8:4808060336707700220",
           "name": "cepController",
           "type": 9
+        },
+        {
+          "id": "9:3195624927747833872",
+          "name": "dataTime",
+          "type": 9
+        },
+        {
+          "id": "11:1444367331685706426",
+          "name": "ibge",
+          "type": 9
+        },
+        {
+          "id": "12:1486048363323526369",
+          "name": "gia",
+          "type": 9
+        },
+        {
+          "id": "13:4393675354134275440",
+          "name": "siafi",
+          "type": 9
+        },
+        {
+          "id": "14:169165269025953561",
+          "name": "erro",
+          "type": 1
+        },
+        {
+          "id": "15:1464702758361713733",
+          "name": "image",
+          "type": 9
         }
       ],
       "relations": []
@@ -61,7 +91,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    8689056668470123685
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

@@ -5,6 +5,7 @@ import 'my_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await ObjectBoxDatabase.create();
   DependecyInjection.init();
 
