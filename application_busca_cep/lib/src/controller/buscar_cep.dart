@@ -1,8 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
 import 'dart:async';
-
 import 'package:application_busca_cep/src/database/objectbox.g.dart';
 import 'package:application_busca_cep/src/database/objectbox_database.dart';
 import 'package:application_busca_cep/src/model/cep_model.dart';
+import 'package:application_busca_cep/src/respostas/respostas.dart';
 import 'package:application_busca_cep/src/services/api_service.dart';
 import 'package:application_busca_cep/src/widgets/cep_modal.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +19,21 @@ class BuscarCepController extends ChangeNotifier {
 
   FutureOr<void> searchAdress({
     required String cep,
-    BuildContext? context,
+    required BuildContext context,
     TextEditingController? controller,
     BuscarCepController? buscarCepController,
   }) async {
     isLoading.value = true;
 
-    CepModel? model = await apiService.getAdress(cep: cep);
+    CepModel? model = await apiService.getAdress(cep: cep, context: context);
 
     if (model != null) {
+      if (model.erro != null) {
+        showErrorDialog("CEP não existe ou não localizado.", context);
+        return;
+      }
       adress.value = model;
-      showAlertDialog(context!, model, buscarCepController!, controller!);
+      showAlertDialog(context, model, buscarCepController!, controller!);
       isLoading.value = false;
       notifyListeners();
     } else {
@@ -42,7 +47,6 @@ class BuscarCepController extends ChangeNotifier {
   FutureOr<void> salvarTarefa(CepModel cepModel) async {
     await ObjectBoxDatabase.tarefaBox.putAsync(cepModel);
     todos.add(cepModel);
-    // controllerTextField.clear();
     notifyListeners();
   }
 

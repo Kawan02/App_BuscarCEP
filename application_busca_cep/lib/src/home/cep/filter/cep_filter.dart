@@ -1,4 +1,5 @@
 import 'package:application_busca_cep/src/controller/buscar_cep.dart';
+import 'package:application_busca_cep/src/widgets/google_maps.dart';
 import 'package:flutter/material.dart';
 
 class CepFilter extends StatefulWidget {
@@ -55,12 +56,22 @@ class _CepFilterState extends State<CepFilter> {
                     ),
                   ),
                   subtitle: Text(
-                    "${cepFilter.logradouro!.isEmpty ? "Logradouro vazio ou não encontrado" : cepFilter.logradouro}, ${cepFilter.bairro!.isEmpty ? "Bairro vazio ou não encontrado" : cepFilter.bairro}, ${cepFilter.cidade!.isEmpty ? "Cidade vazia ou não encontrada" : cepFilter.cidade}, ${cepFilter.uf!.isEmpty ? "uf vazio ou não encontrado" : cepFilter.uf}",
+                    "${cepFilter.logradouro}, ${cepFilter.bairro}, ${cepFilter.cidade}, ${cepFilter.uf}. ${cepFilter.ddd}",
                   ),
+                  trailing: IconButton(
+                    onPressed: () async {
+                      await abrirGoogleMaps(cepFilter.cepController!);
+                    },
+                    icon: const Icon(
+                      Icons.location_on,
+                      color: Colors.greenAccent,
+                      size: 30,
+                    ),
+                  ),
+                  dense: true,
                 ),
                 onDismissed: (direction) async {
                   await widget.buscarCepController!.deletarTarefa(cepFilter);
-                  setState(() {});
                 },
               );
             },
