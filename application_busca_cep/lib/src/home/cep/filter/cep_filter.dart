@@ -60,7 +60,7 @@ class _CepFilterState extends State<CepFilter> {
                   ),
                   trailing: IconButton(
                     onPressed: () async {
-                      await abrirGoogleMaps(cepFilter.cepController!);
+                      await abrirGoogleMaps(cepFilter.cepController!, context);
                     },
                     icon: const Icon(
                       Icons.location_on,

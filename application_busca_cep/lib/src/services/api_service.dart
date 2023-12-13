@@ -17,7 +17,7 @@ class ApiService {
         return CepModel.fromJson(response.data);
       }
     } catch (error) {
-      showErrorDialog(error.toString(), context!);
+      await showErrorDialog(error.toString(), context!);
     }
     return null;
   }
