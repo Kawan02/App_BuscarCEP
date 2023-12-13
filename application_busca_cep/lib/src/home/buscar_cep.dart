@@ -99,9 +99,9 @@ class _BuscarCepState extends State<BuscarCep> {
                     Navigator.of(ctx).pop();
                   });
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.check),
                     Padding(
                       padding: EdgeInsets.all(20),
@@ -232,7 +232,11 @@ class _BuscarCepState extends State<BuscarCep> {
                       )
                     : listFilter == false
                         ? Cep(buscarCepController: buscarCepController)
-                        : CepFilter(buscarCepController: buscarCepController, controllerFilter: controllerFilter),
+                        : Cep(
+                            buscarCepController: buscarCepController,
+                            controllerFilter: controllerFilter,
+                            filter: true,
+                          ),
           ),
         ],
       ),
