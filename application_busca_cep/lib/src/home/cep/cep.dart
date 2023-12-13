@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 
 class Cep extends StatefulWidget {
   final BuscarCepController? buscarCepController;
+  final bool filter;
+  final TextEditingController? controllerFilter;
   const Cep({
     super.key,
     this.buscarCepController,
+    this.filter = false,
+    this.controllerFilter,
   });
 
   @override
@@ -19,11 +23,16 @@ class _CepState extends State<Cep> {
     return widget.buscarCepController!.isLoading.value
         ? const Center(child: CircularProgressIndicator())
         : ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.only(top: 10),
             shrinkWrap: true,
-            itemCount: widget.buscarCepController!.encontrarTarefa().length,
+            itemCount: widget.filter
+                ? widget.buscarCepController!.encontrarTarefa().length
+                : widget.buscarCepController!.encontrarTodasTarefa(widget.controllerFilter!).length,
             itemBuilder: (context, index) {
-              final cep = widget.buscarCepController!.encontrarTarefa()[index];
+              final cep = widget.filter
+                  ? widget.buscarCepController!.encontrarTarefa()[index]
+                  : widget.buscarCepController!.listFilter(widget.controllerFilter!)[index];
 
               return Dismissible(
                 background: Container(
@@ -63,7 +72,7 @@ class _CepState extends State<Cep> {
                   ),
                   trailing: IconButton(
                     onPressed: () async {
-                      await abrirGoogleMaps(cep.cepController!);
+                      await abrirGoogleMaps(cep.cepController!, context);
                     },
                     icon: const Icon(
                       Icons.location_on,
