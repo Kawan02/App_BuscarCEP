@@ -9,6 +9,6 @@ FutureOr abrirGoogleMaps(String cep, BuildContext context) async {
   if (await canLaunchUrl(Uri.parse(urlMap))) {
     await launchUrl(Uri.parse(urlMap));
   } else {
-    throw await showErrorDialog("Não foi possível iniciar o Google Maps", context);
+    await showErrorDialog("Não foi possível iniciar o Google Maps", context);
   }
 }

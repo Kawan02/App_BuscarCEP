@@ -59,9 +59,7 @@ class _CepFilterState extends State<CepFilter> {
                     "${cepFilter.logradouro}, ${cepFilter.bairro}, ${cepFilter.cidade}, ${cepFilter.uf}. ${cepFilter.ddd}",
                   ),
                   trailing: IconButton(
-                    onPressed: () async {
-                      await abrirGoogleMaps(cepFilter.cepController!, context);
-                    },
+                    onPressed: () async => await abrirGoogleMaps(cepFilter.cepController!, context),
                     icon: const Icon(
                       Icons.location_on,
                       color: Colors.greenAccent,
@@ -70,9 +68,7 @@ class _CepFilterState extends State<CepFilter> {
                   ),
                   dense: true,
                 ),
-                onDismissed: (direction) async {
-                  await widget.buscarCepController!.deletarTarefa(cepFilter);
-                },
+                onDismissed: (direction) async => await widget.buscarCepController!.deletarTarefa(cepFilter),
               );
             },
           );
