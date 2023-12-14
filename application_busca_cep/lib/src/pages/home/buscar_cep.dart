@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:core';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:application_busca_cep/src/controller/buscar_cep.dart';
-import 'package:application_busca_cep/src/home/cep/cep.dart';
-import 'package:application_busca_cep/src/home/cep/filter/cep_filter.dart';
+import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
+import 'package:application_busca_cep/src/pages/cep/cep.dart';
+import 'package:application_busca_cep/src/pages/cep/filter/cep_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 

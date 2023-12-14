@@ -1,27 +1,31 @@
-import 'package:application_busca_cep/src/controller/buscar_cep.dart';
-import 'package:application_busca_cep/src/widgets/google_maps.dart';
+import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
+import 'package:application_busca_cep/src/pages/cep/components/google_maps.dart';
 import 'package:flutter/material.dart';
 
-class CepFilter extends StatefulWidget {
+class Cep extends StatefulWidget {
   final BuscarCepController? buscarCepController;
-  final TextEditingController controllerFilter;
-  const CepFilter({super.key, this.buscarCepController, required this.controllerFilter});
+  const Cep({
+    super.key,
+    this.buscarCepController,
+  });
 
   @override
-  State<CepFilter> createState() => _CepFilterState();
+  State<Cep> createState() => _CepState();
 }
 
-class _CepFilterState extends State<CepFilter> {
+class _CepState extends State<Cep> {
   @override
   Widget build(BuildContext context) {
     return widget.buscarCepController!.isLoading.value
         ? const Center(child: CircularProgressIndicator())
         : ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.only(top: 10),
             shrinkWrap: true,
-            itemCount: widget.buscarCepController!.listFilter(widget.controllerFilter).length,
+            itemCount: widget.buscarCepController!.encontrarTarefa().length,
             itemBuilder: (context, index) {
-              final cepFilter = widget.buscarCepController!.listFilter(widget.controllerFilter)[index];
+              final cep = widget.buscarCepController!.encontrarTarefa()[index];
+
               return Dismissible(
                 background: Container(
                   color: Colors.red,
@@ -40,9 +44,9 @@ class _CepFilterState extends State<CepFilter> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "CEP: ${cepFilter.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cepFilter.cepController!}",
+                        "CEP: ${cep.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cep.cepController!}",
                       ),
-                      Text("Criado em: ${cepFilter.dataTime}")
+                      Text("Criado em: ${cep.dataTime}")
                     ],
                   ),
                   leading: CircleAvatar(
@@ -56,10 +60,10 @@ class _CepFilterState extends State<CepFilter> {
                     ),
                   ),
                   subtitle: Text(
-                    "${cepFilter.logradouro}, ${cepFilter.bairro}, ${cepFilter.cidade}, ${cepFilter.uf}. ${cepFilter.ddd}",
+                    "${cep.logradouro}, ${cep.bairro}, ${cep.cidade}, ${cep.uf}. ${cep.ddd}",
                   ),
                   trailing: IconButton(
-                    onPressed: () async => await abrirGoogleMaps(cepFilter.cepController!, context),
+                    onPressed: () async => await abrirGoogleMaps(cep.cepController!, context),
                     icon: const Icon(
                       Icons.location_on,
                       color: Colors.greenAccent,
@@ -68,7 +72,7 @@ class _CepFilterState extends State<CepFilter> {
                   ),
                   dense: true,
                 ),
-                onDismissed: (direction) async => await widget.buscarCepController!.deletarTarefa(cepFilter),
+                onDismissed: (direction) async => await widget.buscarCepController!.deletarTarefa(cep),
               );
             },
           );

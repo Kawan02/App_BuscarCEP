@@ -1,5 +1,5 @@
-import 'package:application_busca_cep/src/controller/dependency_injection.dart';
 import 'package:application_busca_cep/src/database/objectbox_database.dart';
+import 'package:application_busca_cep/src/services/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'my_app.dart';
 
