@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:application_busca_cep/src/controller/buscar_cep.dart';
+import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
 import 'package:application_busca_cep/src/model/cep_model.dart';
 import 'package:flutter/material.dart';
 
