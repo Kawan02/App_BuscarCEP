@@ -130,19 +130,19 @@ class _BuscarCepState extends State<BuscarCep> {
 
   @override
   void initState() {
-    _refresh();
     buscarCepController.addListener(() {
       setState(() {});
     });
+    _refresh();
     super.initState();
   }
 
   @override
   void dispose() {
-    _refresh();
     buscarCepController.removeListener(() {
       setState(() {});
     });
+    _refresh();
     super.dispose();
   }
 
@@ -232,10 +232,9 @@ class _BuscarCepState extends State<BuscarCep> {
                       )
                     : listFilter == false
                         ? Cep(buscarCepController: buscarCepController)
-                        : Cep(
+                        : CepFilter(
                             buscarCepController: buscarCepController,
                             controllerFilter: controllerFilter,
-                            filter: true,
                           ),
           ),
         ],
