@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:core';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:application_busca_cep/src/controller/buscar_cep.dart';
-import 'package:application_busca_cep/src/home/cep/cep.dart';
-import 'package:application_busca_cep/src/home/cep/filter/cep_filter.dart';
+import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
+import 'package:application_busca_cep/src/pages/cep/cep.dart';
+import 'package:application_busca_cep/src/pages/cep/filter/cep_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -99,9 +99,9 @@ class _BuscarCepState extends State<BuscarCep> {
                     Navigator.of(ctx).pop();
                   });
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.check),
                     Padding(
                       padding: EdgeInsets.all(20),
@@ -130,19 +130,19 @@ class _BuscarCepState extends State<BuscarCep> {
 
   @override
   void initState() {
-    _refresh();
     buscarCepController.addListener(() {
       setState(() {});
     });
+    _refresh();
     super.initState();
   }
 
   @override
   void dispose() {
-    _refresh();
     buscarCepController.removeListener(() {
       setState(() {});
     });
+    _refresh();
     super.dispose();
   }
 
@@ -232,7 +232,10 @@ class _BuscarCepState extends State<BuscarCep> {
                       )
                     : listFilter == false
                         ? Cep(buscarCepController: buscarCepController)
-                        : CepFilter(buscarCepController: buscarCepController, controllerFilter: controllerFilter),
+                        : CepFilter(
+                            buscarCepController: buscarCepController,
+                            controllerFilter: controllerFilter,
+                          ),
           ),
         ],
       ),

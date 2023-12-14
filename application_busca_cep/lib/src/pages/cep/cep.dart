@@ -1,5 +1,5 @@
-import 'package:application_busca_cep/src/controller/buscar_cep.dart';
-import 'package:application_busca_cep/src/widgets/google_maps.dart';
+import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
+import 'package:application_busca_cep/src/pages/cep/components/google_maps.dart';
 import 'package:flutter/material.dart';
 
 class Cep extends StatefulWidget {
@@ -19,6 +19,7 @@ class _CepState extends State<Cep> {
     return widget.buscarCepController!.isLoading.value
         ? const Center(child: CircularProgressIndicator())
         : ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.only(top: 10),
             shrinkWrap: true,
             itemCount: widget.buscarCepController!.encontrarTarefa().length,
@@ -62,9 +63,7 @@ class _CepState extends State<Cep> {
                     "${cep.logradouro}, ${cep.bairro}, ${cep.cidade}, ${cep.uf}. ${cep.ddd}",
                   ),
                   trailing: IconButton(
-                    onPressed: () async {
-                      await abrirGoogleMaps(cep.cepController!);
-                    },
+                    onPressed: () async => await abrirGoogleMaps(cep.cepController!, context),
                     icon: const Icon(
                       Icons.location_on,
                       color: Colors.greenAccent,
@@ -73,10 +72,7 @@ class _CepState extends State<Cep> {
                   ),
                   dense: true,
                 ),
-                onDismissed: (direction) async {
-                  await widget.buscarCepController!.deletarTarefa(cep);
-                  setState(() {});
-                },
+                onDismissed: (direction) async => await widget.buscarCepController!.deletarTarefa(cep),
               );
             },
           );
