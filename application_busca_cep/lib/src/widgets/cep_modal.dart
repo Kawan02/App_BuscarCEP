@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
 import 'package:application_busca_cep/src/model/cep_model.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 Future<T?> showAlertDialog<T>(
   BuildContext context,
@@ -60,4 +61,21 @@ class _CepModalState extends State<CepModal> {
       ],
     );
   }
+}
+
+void showToast({required String message, bool isError = false, required context}) {
+  MotionToast(
+    icon: isError ? Icons.info : Icons.check_circle,
+    primaryColor: isError ? Colors.red : Colors.green,
+    description: Text(
+      message,
+      style: const TextStyle(
+        fontSize: 14,
+        color: Colors.black,
+      ),
+    ),
+    width: 200,
+    height: 100,
+    padding: const EdgeInsets.symmetric(vertical: 40),
+  ).show(context);
 }

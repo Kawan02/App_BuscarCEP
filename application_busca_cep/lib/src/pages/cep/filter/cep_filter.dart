@@ -1,5 +1,6 @@
 import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
 import 'package:application_busca_cep/src/pages/cep/components/google_maps.dart';
+import 'package:application_busca_cep/src/widgets/cep_modal.dart';
 import 'package:flutter/material.dart';
 
 class CepFilter extends StatefulWidget {
@@ -14,64 +15,72 @@ class CepFilter extends StatefulWidget {
 class _CepFilterState extends State<CepFilter> {
   @override
   Widget build(BuildContext context) {
-    return widget.buscarCepController!.isLoading.value
-        ? const Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(top: 10),
-            shrinkWrap: true,
-            itemCount: widget.buscarCepController!.listFilter(widget.controllerFilter).length,
-            itemBuilder: (context, index) {
-              final cepFilter = widget.buscarCepController!.listFilter(widget.controllerFilter)[index];
-              return Dismissible(
-                background: Container(
-                  color: Colors.red,
-                  child: const Align(
-                    alignment: Alignment(-0.9, 0),
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
+    return Visibility(
+      visible: !widget.buscarCepController!.isLoading.value,
+      replacement: const Center(child: CircularProgressIndicator()),
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(top: 10),
+        shrinkWrap: true,
+        itemCount: widget.buscarCepController!.listFilter(widget.controllerFilter).length,
+        itemBuilder: (context, index) {
+          final cepFilter = widget.buscarCepController!.listFilter(widget.controllerFilter)[index];
+          return Dismissible(
+            background: Container(
+              color: Colors.red,
+              child: const Align(
+                alignment: Alignment(-0.9, 0),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            direction: DismissDirection.startToEnd,
+            key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+            child: ListTile(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "CEP: ${cepFilter.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cepFilter.cepController!}",
+                  ),
+                  Text("Criado em: ${cepFilter.dataTime}")
+                ],
+              ),
+              leading: CircleAvatar(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/imgs/correios.png"),
                     ),
                   ),
                 ),
-                direction: DismissDirection.startToEnd,
-                key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
-                child: ListTile(
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "CEP: ${cepFilter.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cepFilter.cepController!}",
-                      ),
-                      Text("Criado em: ${cepFilter.dataTime}")
-                    ],
-                  ),
-                  leading: CircleAvatar(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/imgs/correios.png"),
-                        ),
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    "${cepFilter.logradouro}, ${cepFilter.bairro}, ${cepFilter.cidade}, ${cepFilter.uf}. ${cepFilter.ddd}",
-                  ),
-                  trailing: IconButton(
-                    onPressed: () async => await abrirGoogleMaps(cepFilter.cepController!, context),
-                    icon: const Icon(
-                      Icons.location_on,
-                      color: Colors.greenAccent,
-                      size: 30,
-                    ),
-                  ),
-                  dense: true,
+              ),
+              subtitle: Text(
+                "${cepFilter.logradouro}, ${cepFilter.bairro}, ${cepFilter.cidade}, ${cepFilter.uf}. ${cepFilter.ddd}",
+              ),
+              trailing: IconButton(
+                onPressed: () async => await abrirGoogleMaps(cepFilter.cepController!, context),
+                icon: const Icon(
+                  Icons.location_on,
+                  color: Colors.greenAccent,
+                  size: 30,
                 ),
-                onDismissed: (direction) async => await widget.buscarCepController!.deletarTarefa(cepFilter),
+              ),
+              dense: true,
+            ),
+            onDismissed: (direction) async {
+              await widget.buscarCepController!.deletarTarefa(cepFilter);
+              showToast(
+                message: "CEP: ${cepFilter.cepController} excluido com sucesso!",
+                context: context,
               );
             },
           );
+        },
+      ),
+    );
   }
 }
