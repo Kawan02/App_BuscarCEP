@@ -1,6 +1,6 @@
 import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
 import 'package:application_busca_cep/src/pages/cep/components/google_maps.dart';
-import 'package:application_busca_cep/src/widgets/cep_modal.dart';
+import 'package:application_busca_cep/src/respostas/respostas.dart';
 import 'package:flutter/material.dart';
 
 class Cep extends StatefulWidget {
