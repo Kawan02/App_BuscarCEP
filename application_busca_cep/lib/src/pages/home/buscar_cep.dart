@@ -99,9 +99,9 @@ class _BuscarCepState extends State<BuscarCep> {
                     Navigator.of(ctx).pop();
                   });
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.check),
                     Padding(
                       padding: EdgeInsets.all(20),
@@ -130,20 +130,14 @@ class _BuscarCepState extends State<BuscarCep> {
 
   @override
   void initState() {
-    buscarCepController.addListener(() {
-      setState(() {});
-    });
-    _refresh();
     super.initState();
+    _refresh();
   }
 
   @override
   void dispose() {
-    buscarCepController.removeListener(() {
-      setState(() {});
-    });
-    _refresh();
     super.dispose();
+    _refresh();
   }
 
   @override
