@@ -1,4 +1,4 @@
-# 🗺️ App_BuscaCEP
+# 🗺️ App_BuscarCEP
 
 Aplicativo buscar CEP desenvolvido em Flutter, consumindo a API ViaCep e salvando os dados no banco de dados Objectbox.
 
