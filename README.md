@@ -23,6 +23,15 @@ A migração dos dados podem ser realizadas com os comandos abaixos:
 ## Temas Implementados
 
 <div style="display: inline_block">
-  <img align="center" alt="tema-white" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/master/application_busca_cep/assets/imgs/tema_white.PNG">
-  <img align="center" alt="tema-dark" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/master/application_busca_cep/assets/imgs/tema_black.PNG">
+  <img align="center" alt="tema-dark" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/dev-ksm-att-packages/application_busca_cep/assets/imgs/Dark/dark.PNG">
+  <img align="center" alt="tema-dark" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/dev-ksm-att-packages/application_busca_cep/assets/imgs/Dark/filter.PNG">
+  <img align="center" alt="tema-dark" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/dev-ksm-att-packages/application_busca_cep/assets/imgs/Dark/filter_dark.PNG">
+</div>
+
+<br/>
+
+<div style="display: inline_block">
+<img align="center" alt="tema-white" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/dev-ksm-att-packages/application_busca_cep/assets/imgs/White/white.PNG">
+  <img align="center" alt="tema-white" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/dev-ksm-att-packages/application_busca_cep/assets/imgs/White/filter.PNG">
+  <img align="center" alt="tema-white" height="450" src="https://raw.githubusercontent.com/Kawan02/App_BuscaCEP/dev-ksm-att-packages/application_busca_cep/assets/imgs/White/filter_white.PNG">
 </div>
