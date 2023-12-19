@@ -51,9 +51,8 @@ class _CepModalState extends State<CepModal> {
       actions: [
         TextButton(
           onPressed: () async {
-            await widget.buscarCepController.salvarTarefa(widget.model);
+            await widget.buscarCepController.salvarTarefa(widget.model, context);
             widget.controller.clear();
-            setState(() => Navigator.of(context).pop());
           },
           child: const Text("OK"),
         ),
