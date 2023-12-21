@@ -15,9 +15,9 @@ class Cep extends StatelessWidget {
     return Visibility(
       visible: !buscarCepController!.isLoading.value,
       replacement: const Center(child: CircularProgressIndicator()),
-      child: GetBuilder(
+      child: GetBuilder<BuscarCepController>(
         init: buscarCepController,
-        builder: (BuscarCepController controller) {
+        builder: (controller) {
           return ListView.builder(
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.only(top: 10),

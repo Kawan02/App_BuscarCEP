@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:application_busca_cep/src/controller/buscar_cep_controller.dart';
 import 'package:application_busca_cep/src/pages/cep/cep.dart';
+import 'package:application_busca_cep/src/pages/cep/components/custom_text_fiel.dart';
 import 'package:application_busca_cep/src/pages/cep/filter/cep_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -59,23 +60,21 @@ class _BuscarCepState extends State<BuscarCep> {
             padding: const EdgeInsets.only(top: 20),
             child: Form(
               key: _formKeyFilter,
-              child: TextFormField(
-                validator: (text) {
-                  if (text == null || text.isEmpty) {
-                    return "Informe o CEP";
-                  }
+              child: CustomTextField(
+                controller: controllerFilter,
+                validator: (cepFilter) {
+                  if (cepFilter == null || cepFilter.isEmpty) return "Informe o CEP";
+
                   return null;
                 },
-                controller: controllerFilter,
                 inputFormatters: [cepFormatter],
-                keyboardType: TextInputType.number,
+                prefixIcon: const Icon(Icons.maps_home_work),
+                labelText: "Insira um CEP",
+                hintText: "Digite um CEP aqui...",
+                isDense: true,
                 autofocus: true,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.maps_home_work),
-                  labelText: "Insira um CEP",
-                  hintText: "Digite um CEP aqui...",
-                  isDense: true,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
                 ),
               ),
             ),
@@ -99,9 +98,9 @@ class _BuscarCepState extends State<BuscarCep> {
                     Navigator.of(ctx).pop();
                   });
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.check),
                     Padding(
                       padding: EdgeInsets.all(20),
@@ -180,33 +179,29 @@ class _BuscarCepState extends State<BuscarCep> {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Form(
                       key: _formKey,
-                      child: TextFormField(
-                        validator: (text) {
-                          if (text == null || text.isEmpty) {
-                            return "Esse campo é obrigatorio";
-                          }
-                          return null;
-                        },
+                      child: CustomTextField(
                         controller: controller,
                         inputFormatters: [cepFormatter],
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.maps_home_work),
-                          labelText: "Insira um CEP",
-                          hintText: "Digite um CEP aqui...",
-                          suffixIcon: IconButton(
-                            onPressed: () async => await consultar(),
-                            icon: const Icon(
-                              Icons.search,
-                              color: Colors.deepOrange,
-                              size: 25,
-                              semanticLabel: "Pesquisar",
-                            ),
+                        validator: (cep) {
+                          if (cep == null || cep.isEmpty) return "Esse campo é obrigatorio";
+
+                          return null;
+                        },
+                        prefixIcon: const Icon(Icons.maps_home_work),
+                        labelText: "Insira um CEP",
+                        hintText: "Digite um CEP aqui...",
+                        suffixIcon: IconButton(
+                          onPressed: () async => await consultar(),
+                          icon: const Icon(
+                            Icons.search,
+                            color: Colors.deepOrange,
+                            size: 25,
+                            semanticLabel: "Pesquisar",
                           ),
-                          isDense: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
+                        ),
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
                         ),
                       ),
                     ),
