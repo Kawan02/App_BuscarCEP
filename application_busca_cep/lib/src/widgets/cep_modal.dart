@@ -12,7 +12,11 @@ Future<T?> showAlertDialog<T>(
   return await showDialog(
     context: context,
     builder: (BuildContext ctx) {
-      return CepModal(model: model, buscarCepController: buscarCepController, controller: controller);
+      return CepModal(
+        model: model,
+        buscarCepController: buscarCepController,
+        controller: controller,
+      );
     },
   );
 }

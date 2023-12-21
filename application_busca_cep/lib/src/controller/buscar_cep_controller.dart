@@ -21,8 +21,8 @@ class BuscarCepController extends GetxController {
   FutureOr<void> searchAdress({
     required String cep,
     required BuildContext context,
-    TextEditingController? controller,
-    BuscarCepController? buscarCepController,
+    required TextEditingController controller,
+    required BuscarCepController buscarCepController,
   }) async {
     isLoading.value = true;
 
@@ -34,7 +34,7 @@ class BuscarCepController extends GetxController {
         return;
       }
       adress.value = model;
-      showAlertDialog(context, model, buscarCepController!, controller!);
+      showAlertDialog(context, model, buscarCepController, controller);
       isLoading.value = false;
       update();
     } else {
