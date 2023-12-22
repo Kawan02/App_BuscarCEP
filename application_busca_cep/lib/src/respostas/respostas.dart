@@ -48,7 +48,7 @@ FutureOr<AwesomeDialog> showWarningDialog(BuildContext context, CepModel cepMode
   )..show();
 }
 
-void showToast({required String message, bool isError = false, required context}) {
+Future<void> showToast({required String message, bool isError = false, required context}) async {
   MotionToast(
     icon: isError ? Icons.info : Icons.check_circle,
     primaryColor: isError ? Colors.red : Colors.green,

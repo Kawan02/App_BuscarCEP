@@ -4,80 +4,70 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Cep extends StatelessWidget {
-  final BuscarCepController? buscarCepController;
-  const Cep({
-    super.key,
-    this.buscarCepController,
-  });
+  const Cep({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: !buscarCepController!.isLoading.value,
-      replacement: const Center(child: CircularProgressIndicator()),
-      child: GetBuilder<BuscarCepController>(
-        init: buscarCepController,
-        builder: (controller) {
-          return ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(top: 10),
-            shrinkWrap: true,
-            itemCount: controller.encontrarTarefa().length,
-            itemBuilder: (context, index) {
-              final cep = controller.encontrarTarefa()[index];
+    return GetBuilder<BuscarCepController>(
+      builder: (controller) {
+        return ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(top: 10),
+          itemCount: controller.encontrarTarefa().length,
+          itemBuilder: (context, index) {
+            final cep = controller.encontrarTarefa()[index];
 
-              return Dismissible(
-                background: Container(
-                  color: Colors.red,
-                  child: const Align(
-                    alignment: Alignment(-0.9, 0),
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
+            return Dismissible(
+              background: Container(
+                color: Colors.red,
+                child: const Align(
+                  alignment: Alignment(-0.9, 0),
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              direction: DismissDirection.startToEnd,
+              key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+              child: ListTile(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "CEP: ${cep.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cep.cepController!}",
+                    ),
+                    Text("Criado em: ${cep.dataTime}")
+                  ],
+                ),
+                leading: CircleAvatar(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: const DecorationImage(
+                        image: AssetImage("assets/imgs/correios.png"),
+                      ),
                     ),
                   ),
                 ),
-                direction: DismissDirection.startToEnd,
-                key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
-                child: ListTile(
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "CEP: ${cep.cepController!.isEmpty ? "CEP vazio ou não encontrado" : cep.cepController!}",
-                      ),
-                      Text("Criado em: ${cep.dataTime}")
-                    ],
-                  ),
-                  leading: CircleAvatar(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/imgs/correios.png"),
-                        ),
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    "${cep.logradouro}, ${cep.bairro}, ${cep.cidade}, ${cep.uf}. ${cep.ddd}",
-                  ),
-                  trailing: IconButton(
-                    onPressed: () async => await abrirGoogleMaps(cep.cepController!, context),
-                    icon: const Icon(
-                      Icons.location_on,
-                      color: Colors.greenAccent,
-                      size: 30,
-                    ),
-                  ),
-                  dense: true,
+                subtitle: Text(
+                  "${cep.logradouro}, ${cep.bairro}, ${cep.cidade}, ${cep.uf}. ${cep.ddd}",
                 ),
-                onDismissed: (direction) async => await controller.deletarTarefa(cep, context),
-              );
-            },
-          );
-        },
-      ),
+                trailing: IconButton(
+                  onPressed: () async => await abrirGoogleMaps(cep.cepController!, context),
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: Colors.greenAccent,
+                    size: 30,
+                  ),
+                ),
+                dense: true,
+              ),
+              onDismissed: (direction) async => await controller.deletarTarefa(cep, context),
+            );
+          },
+        );
+      },
     );
   }
 }

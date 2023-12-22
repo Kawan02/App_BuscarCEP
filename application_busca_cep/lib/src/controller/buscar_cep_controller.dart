@@ -1,24 +1,24 @@
 // ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:application_busca_cep/src/database/objectbox.g.dart';
 import 'package:application_busca_cep/src/database/objectbox_database.dart';
 import 'package:application_busca_cep/src/model/cep_model.dart';
 import 'package:application_busca_cep/src/respostas/respostas.dart';
 import 'package:application_busca_cep/src/services/api_service.dart';
-import 'package:application_busca_cep/src/widgets/cep_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BuscarCepController extends GetxController {
   final ApiService apiService = ApiService();
-  final ValueNotifier<CepModel?> adress = ValueNotifier(null);
-  final ValueNotifier<bool> isLoading = ValueNotifier(false);
+  final Rx<CepModel?> adress = Rx(null);
+  RxBool isLoading = false.obs;
 
   List<CepModel> _todos = [];
 
-  List<CepModel> get todos => _todos;
+  List<CepModel> get todos => _todos.obs;
 
-  FutureOr<void> searchAdress({
+  Future<void> searchAdress({
     required String cep,
     required BuildContext context,
     required TextEditingController controller,
@@ -34,29 +34,27 @@ class BuscarCepController extends GetxController {
         return;
       }
       adress.value = model;
-      showAlertDialog(context, model, buscarCepController, controller);
+      await buscarCepController.salvarTarefa(adress.value!);
+      controller.clear();
       isLoading.value = false;
-      update();
     } else {
       adress.value = null;
       isLoading.value = false;
-      update();
     }
   }
 
   // Salva os dados
-  FutureOr<void> salvarTarefa(CepModel cepModel, BuildContext context) async {
+  Future<void> salvarTarefa(CepModel cepModel) async {
+    isLoading.value = true;
     await ObjectBoxDatabase.tarefaBox.putAsync(cepModel);
     todos.add(cepModel);
-    Navigator.of(context).pop();
-    update();
+    isLoading.value = false;
   }
 
   // Exclui os dados
-  FutureOr<void> deletarTarefa(CepModel cepModel, BuildContext context) async {
+  Future<void> deletarTarefa(CepModel cepModel, BuildContext context) async {
     await ObjectBoxDatabase.tarefaBox.removeAsync(cepModel.id);
-    update();
-    showToast(
+    await showToast(
       message: "CEP: ${cepModel.cepController} excluído com sucesso!",
       context: context,
     );
@@ -69,14 +67,14 @@ class BuscarCepController extends GetxController {
   }
 
   //Filtra só pelo CEP, digitando os numeros do CEP inicial ele já busca
-  List<CepModel> listFilter(TextEditingController cepFilter) {
-    var filter = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.startsWith(cepFilter.text)).build().find();
+  List<CepModel> listFilter(String cepFilter) {
+    var filter = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.startsWith(cepFilter)).build().find();
     return filter;
   }
 
 //Filtra só pelo CEP se estiver igual
-  List<CepModel> encontrarTodasTarefa(TextEditingController controllerTextField) {
-    var filterCep = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.equals(controllerTextField.text)).build().find();
+  List<CepModel> encontrarTodasTarefa(String controllerTextField) {
+    var filterCep = ObjectBoxDatabase.tarefaBox.query(CepModel_.cepController.equals(controllerTextField)).build().find();
     return filterCep;
   }
 }
