@@ -41,6 +41,7 @@ dev_dependencies:
   # objectbox_generator:
 
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
 
 
 objectbox:
@@ -55,3 +56,20 @@ flutter:
   assets:
     - assets/imgs/
     - assets/video/
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/imgs/correios.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/imgs/correios.png"
+  windows:
+    generate: true
+    image_path: "assets/imgs/correios.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "assets/imgs/correios.png"
